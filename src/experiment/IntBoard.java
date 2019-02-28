@@ -17,8 +17,10 @@ public class IntBoard {
 		calcAdjacencies();
 	}
 	private void calcAdjacencies() {
+
 		for (int i = 0; i < NUM_ROWS; i++) {
 			for (int j = 0; j < NUM_COLS; j++) {
+
 				grid[i][j] = new BoardCell(i,j);
 				Set<BoardCell> temp = new HashSet<BoardCell>();
 				
