@@ -35,26 +35,26 @@ public class Board {
 	
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
-		for (int i = 0; i < NUM_ROWS; i++) { //Setup Grid
-			for (int j = 0; j < NUM_COLS; j++) {
+		for (int i = 0; i < numRows; i++) { //Setup Grid
+			for (int j = 0; j < numCols; j++) {
 				grid[i][j] = new BoardCell(i,j);
 			}
 		}
 		
-		for (int i = 0; i < NUM_ROWS; i++) { //Setup Adjacencies
-			for (int j = 0; j < NUM_COLS; j++) {
+		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
+			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
 				
 				if((i-1)>-1) {
 					temp.add(grid[i-1][j]);
 				}
-				if((i+1)<NUM_ROWS) {
+				if((i+1)<numRows) {
 					temp.add(grid[i+1][j]);
 				}
 				if((j-1)>-1) {
 					temp.add(grid[i][j-1]);
 				}
-				if((j+1)<NUM_COLS) {
+				if((j+1)<numCols) {
 					temp.add(grid[i][j+1]);
 				}
 				adjMtx.put(grid[i][j], temp);
@@ -96,7 +96,7 @@ public class Board {
 	// returns the value of a cell
 	public BoardCell getCell(int i, int j) {
 		//If statement to prevent out of bound values
-		if (i >= NUM_ROWS || j >= NUM_COLS || i < 0 || j < 0) {
+		if (i >= numRows || j >= numCols || i < 0 || j < 0) {
 			return null;
 		}
 		return grid[i][j];
