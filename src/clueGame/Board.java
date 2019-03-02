@@ -2,18 +2,23 @@
  * Authors: Tyler Zudans, Allan MacDougall
  */
 package clueGame;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Board {
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
-	private Map<Character,String> Legend;
+	private Map<Character,String> legend;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private BoardCell[][] grid;
 	private String boardConfigFile;
 	private String roomConfigFile;
-	int numRows;
-	int numCols;
+	private int numRows;
+	private int numCols;
 	final int MAX_BOARD_SIZE = 70;
 	
 	// variable used for singleton pattern
@@ -26,13 +31,35 @@ public class Board {
 		}
 	
 	public void initialize() {
+		legendSetup();
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
 		grid = new BoardCell[numRows][numCols];
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
+		
 	}
 	
+	private void legendSetup() {
+		FileReader legendFile;
+		try {
+			legendFile = new FileReader(roomConfigFile);
+			String line = "";
+			String csvSplit = ",";
+			BufferedReader scan = new BufferedReader(legendFile);
+			try {
+				while ((line = scan.readLine()) != null) {
+					String[] inputValues = line.split(csvSplit);
+					legend.put(inputValues[0].charAt(0), inputValues[1]);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) { //Setup Grid
@@ -94,7 +121,7 @@ public class Board {
 	}
 	
 	// returns the value of a cell
-	public BoardCell getCell(int i, int j) {
+	public BoardCell getCellAt(int i, int j) {
 		//If statement to prevent out of bound values
 		if (i >= numRows || j >= numCols || i < 0 || j < 0) {
 			return null;
@@ -105,6 +132,15 @@ public class Board {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
 		
+	}
+	public Map<Character, String> getLegend() {
+		return legend;
+	}
+	public int getNumRows() {
+		return numRows;
+	}
+	public int getNumColumns() {
+		return numCols;
 	}
 	
 	/* Failed Tests Below 

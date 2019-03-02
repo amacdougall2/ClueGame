@@ -9,12 +9,13 @@ public class BoardCell {
 	private int row;
 	private int col;
 	private char initial;
-	//default doorInitial to space because characters cant compare to null, or blank, or anything useful
-	private char doorInitial = ' ';
-	public BoardCell(int row, int col) {
+	//default doorInitial to space because characters cant compare to null
+	private DoorDirection doorInitial = DoorDirection.NONE;
+	public BoardCell(int row, int col, char initial) {
 		super();
 		this.row = row;
 		this.col = col;
+		this.initial = initial;
 	}
 	
 	public boolean isWalkway() {
@@ -25,8 +26,12 @@ public class BoardCell {
 		return (initial != 'W');
 	}
 	
-	public boolean isDoorWay() {
-		return (doorInitial != ' ');
+	public boolean isDoorway() {
+		return (doorInitial != DoorDirection.NONE);
+	}
+	
+	public DoorDirection getDoorDirection() {
+		return doorInitial;
 	}
 	
 	public int getRow() {
@@ -34,6 +39,10 @@ public class BoardCell {
 	}
 	public int getCol() {
 		return col;
+	}
+
+	public char getInitial() {
+		return initial;
 	}
 	
 	
