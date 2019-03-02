@@ -1,4 +1,6 @@
-
+/*
+ * Authors: Tyler Zudans, Allan MacDougall
+ */
 package experiment;
 import java.util.*;
 
@@ -16,40 +18,51 @@ public class IntBoard {
 		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
 	}
+	
+	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
-
-		for (int i = 0; i < NUM_ROWS; i++) {
+		for (int i = 0; i < NUM_ROWS; i++) { //Setup Grid
 			for (int j = 0; j < NUM_COLS; j++) {
-
 				grid[i][j] = new BoardCell(i,j);
+			}
+		}
+		
+		for (int i = 0; i < NUM_ROWS; i++) { //Setup Adjacencies
+			for (int j = 0; j < NUM_COLS; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
 				
 				if((i-1)>-1) {
-					temp.add(new BoardCell(i-1,j));
+					temp.add(grid[i-1][j]);
 				}
-				if((i+1)<NUM_ROWS+1) {
-					temp.add(new BoardCell(i+1,j));
+				if((i+1)<NUM_ROWS) {
+					temp.add(grid[i+1][j]);
 				}
 				if((j-1)>-1) {
-					temp.add(new BoardCell(i,j-1));
+					temp.add(grid[i][j-1]);
 				}
-				if((j+1)<NUM_COLS+1) {
-					temp.add(new BoardCell(i,j+1));
+				if((j+1)<NUM_COLS) {
+					temp.add(grid[i][j+1]);
 				}
-				adjMtx.put(new BoardCell(i,j), temp);
+				adjMtx.put(grid[i][j], temp);
 			}
 		}
 		
 	}
+	
+	// Returns the value of the adjacency matrix for a specific spot
 	public Set<BoardCell> getAdj(BoardCell input){
 		return adjMtx.get(input);
 	}
-	private void calcTarget(BoardCell startCell, int pathLength) {
+	
+	//Setup for the recursive calls for the target calculation
+	public void calcTargets(BoardCell startCell, int pathLength) {
 		visited.clear();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 		
 	}
+	
+	//recursive segment of target calculation
 	private void findAllTargets(BoardCell startCell,int pathLength) {
 		for(BoardCell adjCell: adjMtx.get(startCell)) {
 			if(!visited.contains(adjCell)) {
@@ -60,17 +73,23 @@ public class IntBoard {
 			}
 		}
 	}
-	private Set<BoardCell> getTargets(){
+	
+	//returns the targets list
+	public Set<BoardCell> getTargets(){
 		return targets;
 	}
+	
+	// returns the value of a cell
 	public BoardCell getCell(int i, int j) {
+		//If statement to prevent out of bound values
+		if (i >= NUM_ROWS || j >= NUM_COLS || i < 0 || j < 0) {
+			return null;
+		}
 		return grid[i][j];
 	}
 	
-	
 	/* Failed Tests Below 
 	private void calcAdjacencies() {
-		// TODO Auto-generated method stub
 		
 	}
 	private Set<BoardCell> getAdj(){
@@ -80,6 +99,10 @@ public class IntBoard {
 		
 	}
 	private Set<BoardCell> getTargets(){
+		return null;
+	}
+	
+	public Set<BoardCell> getTargets(){
 		return null;
 	}
 	 */
