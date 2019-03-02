@@ -1,0 +1,11 @@
+C, Coolbaugh Hall, Card
+K, Koorstek, Card
+B, Blaster's Brew, Card
+R, Rec Center, Card
+M, Mount Zion, Card
+A, Aspen Hall, Card
+S, Sherpa House, Card
+P, Woody's Pizza, Card
+J, PCJ's House, Card
+W, Walkway, Other
+X, Closet, Other
