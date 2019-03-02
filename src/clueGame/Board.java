@@ -31,13 +31,14 @@ public class Board {
 		}
 	
 	public void initialize() {
+		legend = new HashMap<Character,String>();
 		legendSetup();
+		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		gridSetup();
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
-		grid = new BoardCell[numRows][numCols];
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
-		
 	}
 	
 	private void legendSetup() {
@@ -50,8 +51,39 @@ public class Board {
 			try {
 				while ((line = scan.readLine()) != null) {
 					String[] inputValues = line.split(csvSplit);
-					legend.put(inputValues[0].charAt(0), inputValues[1]);
+					legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
 				}
+				legendFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private void gridSetup() {
+		String[][] tempMap = new String[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		
+		FileReader boardFile;
+		try {
+			boardFile = new FileReader(boardConfigFile);
+			String line = "";
+			String csvSplit = ",";
+			BufferedReader scan = new BufferedReader(boardFile);
+			try {
+				int counter = 0;
+				int j =0;
+				while ((line = scan.readLine()) != null) {
+					String[] inputValues = line.split(csvSplit);
+					for (j = 0; j<inputValues.length; j++) {
+						tempMap[counter][j] = inputValues[j];
+					}
+					counter++;
+				}
+				numCols = j;
+				numRows = counter;
+				boardFile.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -59,14 +91,19 @@ public class Board {
 			e1.printStackTrace();
 		}
 		
-	}
-	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
-	private void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) { //Setup Grid
 			for (int j = 0; j < numCols; j++) {
 				grid[i][j] = new BoardCell(i,j);
+				if (tempMap[i][j].length() >1) {
+					grid[i][j].setInitial(tempMap[i][j].charAt(0), tempMap[i][j].charAt(1));
+				}else {
+					grid[i][j].setInitial(tempMap[i][j].charAt(0), ' ');
+				}
 			}
 		}
+	}
+	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
+	private void calcAdjacencies() {
 		
 		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
 			for (int j = 0; j < numCols; j++) {
