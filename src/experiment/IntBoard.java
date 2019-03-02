@@ -47,7 +47,7 @@ public class IntBoard {
 	private void calcTarget(BoardCell startCell, int pathLength) {
 		visited.clear();
 		visited.add(startCell);
-		
+		findAllTargets(startCell, pathLength);
 		
 	}
 	private void findAllTargets(BoardCell startCell,int pathLength) {
