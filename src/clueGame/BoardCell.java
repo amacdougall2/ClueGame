@@ -1,5 +1,6 @@
 /*
- * Authors: Tyler Zudans, Allan MacDougall
+ * Authors: Allan MacDougall, Tyler Zudans
+ * Note: To get the failed tests, simply remove implementations from successful test Classes.
  */
 package clueGame;
 
@@ -14,7 +15,6 @@ public class BoardCell {
 		super();
 		this.row = row;
 		this.col = col;
-		this.initial = initial;
 	}
 	
 	//Sets the initial for the boardCell, and chooses the door's setting too.
@@ -44,25 +44,31 @@ public class BoardCell {
 		return (initial == 'W');
 	}
 	
+	//Returns true if the area is not a walkway or closet
 	public boolean isRoom() {
 		return (initial != 'W' && initial != 'X');
 	}
 	
+	//Returns true if the enum value for Doorway is not NONE
 	public boolean isDoorway() {
 		return (doorInitial != DoorDirection.NONE);
 	}
 	
+	//Returns the direction of the Door (Will return the word NONE if the space is not a door
 	public DoorDirection getDoorDirection() {
 		return doorInitial;
 	}
 	
+	//Returns the int value of the row
 	public int getRow() {
 		return row;
 	}
+	//Returns the int value of the collumn
 	public int getCol() {
 		return col;
 	}
 
+	//returns the Char value of the initial
 	public char getInitial() {
 		return initial;
 	}

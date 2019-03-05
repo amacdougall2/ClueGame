@@ -6,6 +6,7 @@ package tests;
 
 /*
  * This program tests that custom config files are loaded properly.
+ * This Custom test file is an edited version of the provided test setup
  */
 
 // Doing a static import allows me to write assertEquals rather than

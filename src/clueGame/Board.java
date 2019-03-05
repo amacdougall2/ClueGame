@@ -1,9 +1,9 @@
 /*
- * Authors: Tyler Zudans, Allan MacDougall
+ * Authors: Allan MacDougall, Tyler Zudans
+ * Note: To get the failed tests, simply remove implementations from successful test Classes.
  */
 package clueGame;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,6 +30,7 @@ public class Board {
 			return theInstance;
 		}
 	
+	// Initializes the internal Variables and calculates the adjacencies
 	public void initialize() {
 		legend = new HashMap<Character,String>();
 		legendSetup();
@@ -41,6 +42,7 @@ public class Board {
 		calcAdjacencies();
 	}
 	
+	//Sets up the legend Matrix
 	private void legendSetup() {
 		FileReader legendFile;
 		try {
@@ -62,6 +64,7 @@ public class Board {
 		}
 	}
 	
+	//Sets up the grid and preps room matrix
 	private void gridSetup() {
 		String[][] tempMap = new String[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		
@@ -102,6 +105,7 @@ public class Board {
 			}
 		}
 	}
+	
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
 		
@@ -165,6 +169,8 @@ public class Board {
 		}
 		return grid[i][j];
 	}
+	
+	//Allows choosing of config Files
 	public void setConfigFiles(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
