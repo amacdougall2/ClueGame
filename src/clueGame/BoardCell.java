@@ -39,12 +39,13 @@ public class BoardCell {
 		}
 	}
 	
+	//Returns True if the area is a walkway, false otherwise
 	public boolean isWalkway() {
 		return (initial == 'W');
 	}
 	
 	public boolean isRoom() {
-		return (initial != 'W');
+		return (initial != 'W' && initial != 'X');
 	}
 	
 	public boolean isDoorway() {
