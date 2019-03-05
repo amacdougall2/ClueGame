@@ -1,3 +1,7 @@
+/*
+ * Authors: Allan MacDougall, Tyler Zudans
+ */
+
 package clueGame;
 
 public class BadConfigFormatException extends Exception {
@@ -8,12 +12,12 @@ public class BadConfigFormatException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public BadConfigFormatException() {
-		super();
+		super("Incorrect File Formatting Detected");
 		// TODO Auto-generated constructor stub
 	}
 
-	public BadConfigFormatException(String arg0) {
-		super(arg0);
+	public BadConfigFormatException(String fileName) {
+		super("Incorrect file formatting in" + fileName);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -31,45 +31,64 @@ public class Board {
 		}
 	
 	// Initializes the internal Variables and calculates the adjacencies
-	public void initialize() {
+	public void initialize(){
 		legend = new HashMap<Character,String>();
-		legendSetup();
+		try {
+			legendSetup();
+		} catch (FileNotFoundException | BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		gridSetup();
+		try {
+			gridSetup();
+		} catch (FileNotFoundException | BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
 	}
 	
+	//This is setup this way so that legendSetup can be left private after Testing is finished
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException{
+		legend = new HashMap<Character,String>();
+		legendSetup();
+	}
+	
+	//This is setup this way so that gridSetup can be left private after Testing is finished
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
+		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		gridSetup();
+	}
+		
 	//Sets up the legend Matrix
-	private void legendSetup() {
+	private void legendSetup() throws FileNotFoundException, BadConfigFormatException {
 		FileReader legendFile;
+		legendFile = new FileReader(roomConfigFile);
+		String line = "";
+		String csvSplit = ",";
+		BufferedReader scan = new BufferedReader(legendFile);
 		try {
-			legendFile = new FileReader(roomConfigFile);
-			String line = "";
-			String csvSplit = ",";
-			BufferedReader scan = new BufferedReader(legendFile);
-			try {
-				while ((line = scan.readLine()) != null) {
-					String[] inputValues = line.split(csvSplit);
-					legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
+			while ((line = scan.readLine()) != null) {
+				String[] inputValues = line.split(csvSplit);
+				legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
+				if (inputValues[2] != "Card" || inputValues[2] != "Other") {
+					throw new BadConfigFormatException(roomConfigFile);
 				}
-				legendFile.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+			legendFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
 	}
 	
 	//Sets up the grid and preps room matrix
-	private void gridSetup() {
+	private void gridSetup() throws FileNotFoundException, BadConfigFormatException {
 		String[][] tempMap = new String[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		
 		FileReader boardFile;
-		try {
 			boardFile = new FileReader(boardConfigFile);
 			String line = "";
 			String csvSplit = ",";
@@ -90,20 +109,30 @@ public class Board {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+			try {
+				scan.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		
-		for (int i = 0; i < numRows; i++) { //Setup Grid
-			for (int j = 0; j < numCols; j++) {
-				grid[i][j] = new BoardCell(i,j);
-				if (tempMap[i][j].length() >1) {
-					grid[i][j].setInitial(tempMap[i][j].charAt(0), tempMap[i][j].charAt(1));
-				}else {
-					grid[i][j].setInitial(tempMap[i][j].charAt(0), ' ');
+			for (int i = 0; i < numRows; i++) { //Setup Grid
+				for (int j = 0; j < numCols; j++) {
+					grid[i][j] = new BoardCell(i,j);
+					if (tempMap[i][j] == null) {
+						throw new BadConfigFormatException(boardConfigFile);
+					}
+					if (!legend.containsKey(tempMap[i][j].charAt(0))){
+						throw new BadConfigFormatException(boardConfigFile);
+					}
+					if (tempMap[i][j].length() >1) {
+						grid[i][j].setInitial(tempMap[i][j].charAt(0), tempMap[i][j].charAt(1));
+					}else {
+						grid[i][j].setInitial(tempMap[i][j].charAt(0), ' ');
+					}
 				}
 			}
-		}
 	}
 	
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
