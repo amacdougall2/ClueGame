@@ -73,9 +73,12 @@ public class Board {
 			while ((line = scan.readLine()) != null) {
 				String[] inputValues = line.split(csvSplit);
 				legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
-				if (inputValues[2] != "Card" || inputValues[2] != "Other") {
+				/*if (inputValues[2].substring(1) == "Card" || inputValues[2].substring(1) == "Other" ) {
+					System.out.println(inputValues[2].substring(1));
+				}else {
+					System.out.println(inputValues[2]);
 					throw new BadConfigFormatException(roomConfigFile);
-				}
+				}*/
 			}
 			legendFile.close();
 		} catch (IOException e) {
@@ -145,7 +148,6 @@ public class Board {
 		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
 			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
-				
 				if((i-1)>-1) {
 					temp.add(grid[i-1][j]);
 				}
