@@ -36,7 +36,7 @@ public class Board {
 		try {
 			legendSetup();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
-			e.printStackTrace();
+			System.out.println("Incorrect file formatting");
 		}
 		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		try {
@@ -81,7 +81,11 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		try {
+			scan.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Sets up the grid and preps room matrix
@@ -165,8 +169,21 @@ public class Board {
 		return adjMtx.get(input);
 	}
 	
+	public Set<BoardCell> getAdjList(int x, int y){
+		BoardCell temp = new BoardCell(0,0);
+		return adjMtx.get(temp);
+	}
+	
 	//Setup for the recursive calls for the target calculation
 	public void calcTargets(BoardCell startCell, int pathLength) {
+		visited.clear();
+		visited.add(startCell);
+		findAllTargets(startCell, pathLength);
+		
+	}
+	
+	public void calcTargets(int startx, int starty, int pathLength) {
+		BoardCell startCell = new BoardCell(startx, starty);
 		visited.clear();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
