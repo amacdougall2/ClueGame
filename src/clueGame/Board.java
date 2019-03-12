@@ -170,8 +170,7 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getAdjList(int x, int y){
-		BoardCell temp = new BoardCell(0,0);
-		return adjMtx.get(temp);
+		return adjMtx.get(grid[0][0]);
 	}
 	
 	//Setup for the recursive calls for the target calculation
@@ -182,11 +181,11 @@ public class Board {
 		
 	}
 	
+	//Dumb alternate method added because the tests we are given are never consistant in thier syntax
 	public void calcTargets(int startx, int starty, int pathLength) {
-		BoardCell startCell = new BoardCell(startx, starty);
 		visited.clear();
-		visited.add(startCell);
-		findAllTargets(startCell, pathLength);
+		visited.add(grid[startx][starty]);
+		findAllTargets(grid[startx][starty], pathLength);
 		
 	}
 	
