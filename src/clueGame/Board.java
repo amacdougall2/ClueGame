@@ -237,16 +237,18 @@ public class Board {
 	//Setup for the recursive calls for the target calculation
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		visited.clear();
+		targets.clear();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 		
 	}
 	
 	//Dumb alternate method added because the tests we are given are never consistant in thier syntax
-	public void calcTargets(int startx, int starty, int pathLength) {
+	public void calcTargets(int startRow, int startCol, int pathLength) {
 		visited.clear();
-		visited.add(grid[startx][starty]);
-		findAllTargets(grid[startx][starty], pathLength);
+		targets.clear();
+		visited.add(grid[startRow][startCol]);
+		findAllTargets(grid[startRow][startCol], pathLength);
 		
 	}
 	
@@ -255,8 +257,13 @@ public class Board {
 		for(BoardCell adjCell: adjMtx.get(startCell)) {
 			if(!visited.contains(adjCell)) {
 				visited.add(adjCell);
-				if(pathLength==1) targets.add(adjCell);
-				else findAllTargets(adjCell,pathLength-1);
+				if(pathLength==1) {
+					targets.add(adjCell);
+				}else if(adjCell.isDoorway()) {
+					targets.add(adjCell);
+				}else {
+					findAllTargets(adjCell,pathLength-1);
+				}
 				visited.remove(adjCell);
 			}
 		}
