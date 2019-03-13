@@ -39,6 +39,9 @@ public class CTest_BoardAdjTargetTests {
 		assertEquals(0, testList.size());
 		// Test one that has walkway underneath
 		testList = board.getAdjList(4, 0);
+		System.out.println();
+		for(BoardCell b: testList) System.out.println(b);
+		System.out.println();
 		assertEquals(0, testList.size());
 		// Test one that has walkway above
 		testList = board.getAdjList(15, 20);
@@ -277,6 +280,7 @@ public class CTest_BoardAdjTargetTests {
 	{
 		board.calcTargets(12, 7, 3);
 		Set<BoardCell> targets= board.getTargets();
+		for(BoardCell b:targets) System.out.println(b);
 		assertEquals(12, targets.size());
 		// directly up and down
 		assertTrue(targets.contains(board.getCellAt(15, 7)));

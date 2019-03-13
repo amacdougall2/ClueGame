@@ -144,21 +144,29 @@ public class Board {
 	
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
-		
+		//updated  to consider cell type
 		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
 			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
-				if((i-1)>-1) {
-					temp.add(grid[i-1][j]);
+				if((i-1)>-1) {//valid space in
+					if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {
+						temp.add(grid[i-1][j]);
+					}
 				}
 				if((i+1)<numRows) {
-					temp.add(grid[i+1][j]);
+					if(grid[i+1][j].isDoorway()||grid[i+1][j].isWalkway()) {
+						temp.add(grid[i+1][j]);
+					}
 				}
 				if((j-1)>-1) {
-					temp.add(grid[i][j-1]);
+					if(grid[i][j-1].isDoorway()||grid[i][j-1].isWalkway()) {
+						temp.add(grid[i][j-1]);
+					}
 				}
 				if((j+1)<numCols) {
-					temp.add(grid[i][j+1]);
+					if(grid[i][j+1].isDoorway()||grid[i][j+1].isWalkway()) {
+						temp.add(grid[i][j+1]);
+					}
 				}
 				adjMtx.put(grid[i][j], temp);
 			}
@@ -172,7 +180,7 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getAdjList(int x, int y){
-		return adjMtx.get(grid[0][0]);
+		return adjMtx.get(grid[x][y]);
 	}
 	
 	//Setup for the recursive calls for the target calculation

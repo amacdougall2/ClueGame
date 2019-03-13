@@ -72,6 +72,8 @@ public class BoardCell {
 	public char getInitial() {
 		return initial;
 	}
-	
+	public String toString() {
+		return ("Row: "+row+" Col:"+col);
+	}
 	
 }
