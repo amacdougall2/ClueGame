@@ -148,27 +148,49 @@ public class Board {
 		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
 			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
-				if((i-1)>-1) {//valid space in
-					if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {
-						temp.add(grid[i-1][j]);
+				if(grid[i][j].isDoorway()) {//if its a doorway add adj cell in specified direction
+					switch(grid[i][j].getDoorDirection()) {
+						case RIGHT:
+							temp.add(grid[i][j+1]);
+							break;
+						case LEFT:
+							temp.add(grid[i][j-1]);
+							break;
+						case UP:
+							temp.add(grid[i-1][j]);
+							break;
+						case DOWN:
+							temp.add(grid[i+1][j]);
+							break;
+						case NONE:
+							System.out.println("Error: None should not be evaluated in this case statement");
+							break;
+						 
 					}
 				}
-				if((i+1)<numRows) {
-					if(grid[i+1][j].isDoorway()||grid[i+1][j].isWalkway()) {
-						temp.add(grid[i+1][j]);
+				if(!grid[i][j].isRoom()) {//if its not in a room check in all 4 direction for valid adj cells
+					if((i-1)>-1) {//valid space in
+						if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {
+							temp.add(grid[i-1][j]);
+						}
+					}
+					if((i+1)<numRows) {
+						if(grid[i+1][j].isDoorway()||grid[i+1][j].isWalkway()) {
+							temp.add(grid[i+1][j]);
+						}
+					}
+					if((j-1)>-1) {
+						if(grid[i][j-1].isDoorway()||grid[i][j-1].isWalkway()) {
+							temp.add(grid[i][j-1]);
+						}
+					}
+					if((j+1)<numCols) {
+						if(grid[i][j+1].isDoorway()||grid[i][j+1].isWalkway()) {
+							temp.add(grid[i][j+1]);
+						}
 					}
 				}
-				if((j-1)>-1) {
-					if(grid[i][j-1].isDoorway()||grid[i][j-1].isWalkway()) {
-						temp.add(grid[i][j-1]);
-					}
-				}
-				if((j+1)<numCols) {
-					if(grid[i][j+1].isDoorway()||grid[i][j+1].isWalkway()) {
-						temp.add(grid[i][j+1]);
-					}
-				}
-				adjMtx.put(grid[i][j], temp);
+				adjMtx.put(grid[i][j], temp);//empty if it's a room and not a doorway
 			}
 		}
 		
