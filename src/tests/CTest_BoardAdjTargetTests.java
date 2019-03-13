@@ -64,7 +64,6 @@ public class CTest_BoardAdjTargetTests {
 	{
 		// TEST DOORWAY RIGHT 
 		Set<BoardCell> testList = board.getAdjList(11, 6);
-		for(BoardCell b: testList) System.out.println(b);
 		assertEquals(1, testList.size());
 		assertTrue(testList.contains(board.getCellAt(11, 7)));
 		// TEST DOORWAY LEFT 
@@ -168,6 +167,7 @@ public class CTest_BoardAdjTargetTests {
 		assertTrue(testList.contains(board.getCellAt(5, 2)));
 		assertTrue(testList.contains(board.getCellAt(5, 4)));
 		assertTrue(testList.contains(board.getCellAt(6, 3)));
+		for(BoardCell b: testList) System.out.println(b);
 		assertEquals(3, testList.size());
 	}
 	

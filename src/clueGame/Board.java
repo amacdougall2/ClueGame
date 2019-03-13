@@ -169,24 +169,53 @@ public class Board {
 					}
 				}
 				if(!grid[i][j].isRoom()) {//if its not in a room check in all 4 direction for valid adj cells
-					if((i-1)>-1) {//valid space in
-						if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {
-							temp.add(grid[i-1][j]);
+					if((i-1)>-1) {//test cell above
+						if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {//it is not a room but may be a door(could be simplified with helper function)
+							if(grid[i-1][j].isDoorway()){//is door
+								if(grid[i-1][j].getDoorDirection()==DoorDirection.DOWN) {//is in correct direction
+									temp.add(grid[i-1][j]);
+								}
+							}
+							else {//is a walkway
+								temp.add(grid[i-1][j]);
+							}
+							
 						}
 					}
-					if((i+1)<numRows) {
+					if((i+1)<numRows) {//test cell below
 						if(grid[i+1][j].isDoorway()||grid[i+1][j].isWalkway()) {
-							temp.add(grid[i+1][j]);
+							if(grid[i+1][j].isDoorway()){//is door
+								if(grid[i+1][j].getDoorDirection()==DoorDirection.UP) {//is in correct direction
+									temp.add(grid[i+1][j]);
+								}
+							}
+							else {//is a walkway
+								temp.add(grid[i+1][j]);
+							}
 						}
 					}
-					if((j-1)>-1) {
+					if((j-1)>-1) {//test cell to left
 						if(grid[i][j-1].isDoorway()||grid[i][j-1].isWalkway()) {
-							temp.add(grid[i][j-1]);
+							if(grid[i][j-1].isDoorway()){//is door
+								if(grid[i][j-1].getDoorDirection()==DoorDirection.RIGHT) {//is in correct direction
+									temp.add(grid[i][j-1]);
+								}
+							}
+							else {//is a walkway
+								temp.add(grid[i][j-1]);
+							}
 						}
 					}
-					if((j+1)<numCols) {
+					if((j+1)<numCols) {//test cell to right
 						if(grid[i][j+1].isDoorway()||grid[i][j+1].isWalkway()) {
-							temp.add(grid[i][j+1]);
+							if(grid[i][j+1].isDoorway()){//is door
+								if(grid[i][j+1].getDoorDirection()==DoorDirection.LEFT) {//is in correct direction
+									temp.add(grid[i][j+1]);
+								}
+							}
+							else {//is a walkway
+								temp.add(grid[i][j+1]);
+							}
 						}
 					}
 				}
