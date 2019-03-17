@@ -144,11 +144,14 @@ public class Board {
 	
 	// CalcAdjacencies sets up the grid and sets the adjacencie matrix for each space
 	private void calcAdjacencies() {
-		//updated  to consider cell type
-		for (int i = 0; i < numRows; i++) { //Setup Adjacencies
+		
+		//For each valid cell on the board
+		for (int i = 0; i < numRows; i++) { 
 			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
-				if(grid[i][j].isDoorway()) {//if its a doorway add adj cell in specified direction
+				
+				//if the cell at i,j is a doorway, add adj cell in it's specified direction
+				if(grid[i][j].isDoorway()) {
 					switch(grid[i][j].getDoorDirection()) {
 						case RIGHT:
 							temp.add(grid[i][j+1]);
@@ -170,53 +173,20 @@ public class Board {
 				}
 				if(!grid[i][j].isRoom()) {//if its not in a room check in all 4 direction for valid adj cells
 					if((i-1)>-1) {//test cell above
-						if(grid[i-1][j].isDoorway()||grid[i-1][j].isWalkway()) {//it is not a room but may be a door(could be simplified with helper function)
-							if(grid[i-1][j].isDoorway()){//is door
-								if(grid[i-1][j].getDoorDirection()==DoorDirection.DOWN) {//is in correct direction
-									temp.add(grid[i-1][j]);
-								}
-							}
-							else {//is a walkway
-								temp.add(grid[i-1][j]);
-							}
-							
-						}
+						BoardCell item = check_add(i,j,DoorDirection.DOWN);
+						if (item!=null) temp.add(item);
 					}
 					if((i+1)<numRows) {//test cell below
-						if(grid[i+1][j].isDoorway()||grid[i+1][j].isWalkway()) {
-							if(grid[i+1][j].isDoorway()){//is door
-								if(grid[i+1][j].getDoorDirection()==DoorDirection.UP) {//is in correct direction
-									temp.add(grid[i+1][j]);
-								}
-							}
-							else {//is a walkway
-								temp.add(grid[i+1][j]);
-							}
-						}
+						BoardCell item = check_add(i,j,DoorDirection.UP);
+						if (item!=null) temp.add(item);
 					}
 					if((j-1)>-1) {//test cell to left
-						if(grid[i][j-1].isDoorway()||grid[i][j-1].isWalkway()) {
-							if(grid[i][j-1].isDoorway()){//is door
-								if(grid[i][j-1].getDoorDirection()==DoorDirection.RIGHT) {//is in correct direction
-									temp.add(grid[i][j-1]);
-								}
-							}
-							else {//is a walkway
-								temp.add(grid[i][j-1]);
-							}
-						}
+						BoardCell item = check_add(i,j,DoorDirection.RIGHT);
+						if (item!=null) temp.add(item);
 					}
 					if((j+1)<numCols) {//test cell to right
-						if(grid[i][j+1].isDoorway()||grid[i][j+1].isWalkway()) {
-							if(grid[i][j+1].isDoorway()){//is door
-								if(grid[i][j+1].getDoorDirection()==DoorDirection.LEFT) {//is in correct direction
-									temp.add(grid[i][j+1]);
-								}
-							}
-							else {//is a walkway
-								temp.add(grid[i][j+1]);
-							}
-						}
+						BoardCell item = check_add(i,j,DoorDirection.LEFT);
+						if (item!=null) temp.add(item);
 					}
 				}
 				adjMtx.put(grid[i][j], temp);//empty if it's a room and not a doorway
@@ -247,16 +217,16 @@ public class Board {
 		int tar_j=0;
 		switch (d){
 			case DOWN://evaluating cell above i,j
-				tar_i=1;
+				tar_i=-1;
 				break;
 			case UP://evaluating cell below i,j
-				tar_i=-1;
+				tar_i=1;
 				break;
 			case LEFT:// evaluating cell to right of i,j
 				tar_j=1;
 				break;
 			case RIGHT:// evaluating cell to left of i,j
-				tar_j=1;
+				tar_j=-1;
 				break;
 			case NONE:
 				System.out.println("This case in check_add should not be run");
@@ -266,11 +236,11 @@ public class Board {
 		if(grid[i+tar_i][j+tar_j].isDoorway()||grid[i+tar_i][j+tar_j].isWalkway()) {//it is not a room but may be a door(could be simplified with helper function)
 			if(grid[i+tar_i][j+tar_j].isDoorway()){//is door
 				if(grid[i+tar_i][j+tar_j].getDoorDirection()==d) {//is in correct direction
-					return(grid[i-1][j]);
+					return(grid[i+tar_i][j+tar_j]);
 				}
 			}
 			else {//is a walkway
-				return(grid[i-1][j]);
+				return(grid[i+tar_i][j+tar_j]);
 			}
 			
 		}
