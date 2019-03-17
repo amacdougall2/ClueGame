@@ -150,7 +150,7 @@ public class Board {
 			for (int j = 0; j < numCols; j++) {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
 				
-				//if the cell at i,j is a doorway, add adj cell in it's specified direction
+				//if the cell at i,j is a doorway, add adj cell in it's specified direction to map
 				if(grid[i][j].isDoorway()) {
 					switch(grid[i][j].getDoorDirection()) {
 						case RIGHT:
@@ -171,7 +171,9 @@ public class Board {
 						 
 					}
 				}
-				if(!grid[i][j].isRoom()) {//if its not in a room check in all 4 direction for valid adj cells
+				
+				//if its not in a room check in all 4 direction for valid adj cells and add them to the map
+				if(!grid[i][j].isRoom()) {
 					if((i-1)>-1) {//test cell above
 						BoardCell item = check_add(i,j,DoorDirection.DOWN);
 						if (item!=null) temp.add(item);
@@ -189,13 +191,14 @@ public class Board {
 						if (item!=null) temp.add(item);
 					}
 				}
-				adjMtx.put(grid[i][j], temp);//empty if it's a room and not a doorway
+				
+				//push the key value pair of the cell and its valid adj cell(s) to the boards adjMtx map
+				adjMtx.put(grid[i][j], temp);//temp empty by default if it's a room and not a doorway
 			}
 		}
 		
 	}
 	
-	// Returns the value of the adjacency matrix for a specific spot
 	public Set<BoardCell> getAdj(BoardCell input){
 		return adjMtx.get(input);
 	}
