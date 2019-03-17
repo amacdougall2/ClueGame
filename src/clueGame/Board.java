@@ -215,9 +215,11 @@ public class Board {
 		findAllTargets(startCell, pathLength);
 		
 	}
-	public BoardCell check_add(int i, int j, DoorDirection d) {//tar i and j offsets when checking
-		int tar_i=0;
-		int tar_j=0;
+	public BoardCell check_add(int i, int j, DoorDirection d) {
+		int tar_i=0;//row offset for the one adjacent cell checked from cell i,j
+		int tar_j=0;//col offset for the one adjacent cell checked from cell i,j
+		
+		//set row and col offsets according to direction being checked (opposite of door direction)
 		switch (d){
 			case DOWN://evaluating cell above i,j
 				tar_i=-1;
@@ -236,11 +238,12 @@ public class Board {
 				break;
 		}
 		
-		if(grid[i+tar_i][j+tar_j].isDoorway()||grid[i+tar_i][j+tar_j].isWalkway()) {//it is not a room but may be a door(could be simplified with helper function)
+		//evaluate adjacent cell for validity
+		if(grid[i+tar_i][j+tar_j].isDoorway()||grid[i+tar_i][j+tar_j].isWalkway()) {//it is a walkway or a door
 			if(grid[i+tar_i][j+tar_j].isDoorway()){//is door
 				if(grid[i+tar_i][j+tar_j].getDoorDirection()==d) {//is in correct direction
 					return(grid[i+tar_i][j+tar_j]);
-				}
+				}//otherwise it will return null
 			}
 			else {//is a walkway
 				return(grid[i+tar_i][j+tar_j]);
@@ -250,7 +253,7 @@ public class Board {
 		return(null);
 	}
 	
-	//Dumb alternate method added because the tests we are given are never consistant in thier syntax
+	//Alternate method added because the tests we are given are never consistent in their syntax
 	public void calcTargets(int startRow, int startCol, int pathLength) {
 		visited.clear();
 		targets.clear();
