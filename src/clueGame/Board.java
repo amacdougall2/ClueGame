@@ -242,6 +242,40 @@ public class Board {
 		findAllTargets(startCell, pathLength);
 		
 	}
+	public BoardCell check_add(int i, int j, DoorDirection d) {//tar i and j offsets when checking
+		int tar_i=0;
+		int tar_j=0;
+		switch (d){
+			case DOWN://evaluating cell above i,j
+				tar_i=1;
+				break;
+			case UP://evaluating cell below i,j
+				tar_i=-1;
+				break;
+			case LEFT:// evaluating cell to right of i,j
+				tar_j=1;
+				break;
+			case RIGHT:// evaluating cell to left of i,j
+				tar_j=1;
+				break;
+			case NONE:
+				System.out.println("This case in check_add should not be run");
+				break;
+		}
+		
+		if(grid[i+tar_i][j+tar_j].isDoorway()||grid[i+tar_i][j+tar_j].isWalkway()) {//it is not a room but may be a door(could be simplified with helper function)
+			if(grid[i+tar_i][j+tar_j].isDoorway()){//is door
+				if(grid[i+tar_i][j+tar_j].getDoorDirection()==d) {//is in correct direction
+					return(grid[i-1][j]);
+				}
+			}
+			else {//is a walkway
+				return(grid[i-1][j]);
+			}
+			
+		}
+		return(null);
+	}
 	
 	//Dumb alternate method added because the tests we are given are never consistant in thier syntax
 	public void calcTargets(int startRow, int startCol, int pathLength) {
