@@ -33,6 +33,7 @@ public class Board {
 	// Initializes the internal Variables and calculates the adjacencies
 	public void initialize(){
 		legend = new HashMap<Character,String>();
+		//Try-Catch phases in this function so that they can be handled here
 		try {
 			legendSetup();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
@@ -66,9 +67,11 @@ public class Board {
 		String line;
 		BufferedReader scan = new BufferedReader(legendFile);
 		try {
-			while ((line = scan.readLine()) != null) {
+			while ((line = scan.readLine()) != null) {//Loads in the three values of each legend space
 				String[] inputValues = line.split(",");
 				legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
+				
+				//TODO: FIX this error throw statement below
 				/*if (inputValues[2].substring(1) == "Card" || inputValues[2].substring(1) == "Other" ) {
 					System.out.println(inputValues[2].substring(1));
 				}else {
@@ -89,19 +92,17 @@ public class Board {
 	
 	//Sets up the grid and preps room matrix
 	private void gridSetup() throws FileNotFoundException, BadConfigFormatException {
-		String[][] tempMap = new String[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		
-		FileReader boardFile;
-			boardFile = new FileReader(boardConfigFile);
-			String line = "";
-			String csvSplit = ",";
+			String[][] tempMap = new String[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+			
+			FileReader boardFile = new FileReader(boardConfigFile);
+			String line;
 			BufferedReader scan = new BufferedReader(boardFile);
 			try {
 				int counter = 0;
 				int j =0;
-				while ((line = scan.readLine()) != null) {
-					String[] inputValues = line.split(csvSplit);
-					for (j = 0; j<inputValues.length; j++) {
+				while ((line = scan.readLine()) != null) { //Continues to read lines into an array until the file is done
+					String[] inputValues = line.split(",");
+					for (j = 0; j<inputValues.length; j++) { //places the value of each space into the same spot in grid
 						tempMap[counter][j] = inputValues[j];
 					}
 					counter++;
@@ -115,12 +116,11 @@ public class Board {
 			try {
 				scan.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		
-			for (int i = 0; i < numRows; i++) { //Setup Grid
+			for (int i = 0; i < numRows; i++) { //Checks to make sure we have loaded a valid grid, otherwise throws an error
 				for (int j = 0; j < numCols; j++) {
 					grid[i][j] = new BoardCell(i,j);
 					if (tempMap[i][j] == null) {
@@ -243,7 +243,7 @@ public class Board {
 	
 	//Setup for the recursive calls for the target calculation
 	public void calcTargets(BoardCell startCell, int pathLength) {
-		visited = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>(); //initialized the visited and targets sets
 		targets = new HashSet<BoardCell>();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
@@ -259,14 +259,14 @@ public class Board {
 		for(BoardCell adjCell: adjMtx.get(startCell)) {
 			if(!visited.contains(adjCell)) {
 				visited.add(adjCell);
-				if(pathLength==1) {
+				if(pathLength==1) { //If this is the end of the path, add to targets
 					targets.add(adjCell);
-				}else if(adjCell.isDoorway()) {
+				}else if(adjCell.isDoorway()) { //if the space is a door, we can use it
 					targets.add(adjCell);
-				}else {
+				}else { //Otherwise, test all targets of the next space with one less dice roll
 					findAllTargets(adjCell,pathLength-1);
 				}
-				visited.remove(adjCell);
+				visited.remove(adjCell); //Removes current location, since this may be recalculated in later steps
 			}
 		}
 	}
