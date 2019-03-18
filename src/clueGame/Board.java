@@ -62,14 +62,12 @@ public class Board {
 		
 	//Sets up the legend Matrix
 	private void legendSetup() throws FileNotFoundException, BadConfigFormatException {
-		FileReader legendFile;
-		legendFile = new FileReader(roomConfigFile);
-		String line = "";
-		String csvSplit = ",";
+		FileReader legendFile = new FileReader(roomConfigFile);
+		String line;
 		BufferedReader scan = new BufferedReader(legendFile);
 		try {
 			while ((line = scan.readLine()) != null) {
-				String[] inputValues = line.split(csvSplit);
+				String[] inputValues = line.split(",");
 				legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
 				/*if (inputValues[2].substring(1) == "Card" || inputValues[2].substring(1) == "Other" ) {
 					System.out.println(inputValues[2].substring(1));
