@@ -204,15 +204,7 @@ public class Board {
 	public Set<BoardCell> getAdjList(int x, int y){
 		return adjMtx.get(grid[x][y]);
 	}
-	
-	//Setup for the recursive calls for the target calculation
-	public void calcTargets(BoardCell startCell, int pathLength) {
-		visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
-		visited.add(startCell);
-		findAllTargets(startCell, pathLength);
 		
-	}
 	public BoardCell check_add(int i, int j, DoorDirection d) {
 		int tar_i=0;//row offset for the one adjacent cell checked from cell i,j
 		int tar_j=0;//col offset for the one adjacent cell checked from cell i,j
@@ -249,6 +241,14 @@ public class Board {
 			
 		}
 		return(null);
+	}
+	
+	//Setup for the recursive calls for the target calculation
+	public void calcTargets(BoardCell startCell, int pathLength) {
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		visited.add(startCell);
+		findAllTargets(startCell, pathLength);
 	}
 	
 	//Alternate method added because the tests we are given are never consistent in their syntax
