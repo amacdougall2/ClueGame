@@ -45,8 +45,6 @@ public class Board {
 			e.printStackTrace();
 		}
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
-		visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
 	}
 	
@@ -209,8 +207,8 @@ public class Board {
 	
 	//Setup for the recursive calls for the target calculation
 	public void calcTargets(BoardCell startCell, int pathLength) {
-		visited.clear();
-		targets.clear();
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 		
@@ -255,11 +253,7 @@ public class Board {
 	
 	//Alternate method added because the tests we are given are never consistent in their syntax
 	public void calcTargets(int startRow, int startCol, int pathLength) {
-		visited.clear();
-		targets.clear();
-		visited.add(grid[startRow][startCol]);
-		findAllTargets(grid[startRow][startCol], pathLength);
-		
+		calcTargets(grid[startRow][startCol], pathLength);
 	}
 	
 	//recursive segment of target calculation
