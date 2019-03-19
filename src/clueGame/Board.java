@@ -19,6 +19,11 @@ public class Board {
 	private String roomConfigFile;
 	private int numRows;
 	private int numCols;
+	public Solution theAnswer;
+	public Player[] players;
+	public Card[] deck;
+	final int DECK_SIZE = 18; //18 is a temporary value for now
+	final int NUM_PLAYERS = 6;
 	final int MAX_BOARD_SIZE = 70;
 	
 	// variable used for singleton pattern
@@ -33,6 +38,7 @@ public class Board {
 	// Initializes the internal Variables and calculates the adjacencies
 	public void initialize(){
 		legend = new HashMap<Character,String>();
+		players = new Player[NUM_PLAYERS];
 		//Try-Catch phases in this function so that they can be handled here
 		try {
 			legendSetup();
@@ -47,6 +53,10 @@ public class Board {
 		}
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
 		calcAdjacencies();
+	}
+	
+	public void loadConfigFiles() {
+		
 	}
 	
 	//This is setup this way so that legendSetup can be left private after Testing is finished
@@ -271,6 +281,18 @@ public class Board {
 		}
 	}
 	
+	public void selectAnswer() {
+		
+	}
+	
+	public Card handleSuggestion() { //TO BE DETERMINED
+		return null;
+	}
+	
+	public boolean checkAccusation(Solution accusation) {
+		return false;
+	}
+	
 	//returns the targets list
 	public Set<BoardCell> getTargets(){
 		return targets;
@@ -301,23 +323,5 @@ public class Board {
 		return numCols;
 	}
 	
-	/* Failed Tests Below 
-	private void calcAdjacencies() {
-		
-	}
-	private Set<BoardCell> getAdj(){
-		return null;
-	}
-	private void calcTarget(BoardCell startCell, int pathLength) {
-		
-	}
-	private Set<BoardCell> getTargets(){
-		return null;
-	}
-	
-	public Set<BoardCell> getTargets(){
-		return null;
-	}
-	 */
 	
 }
