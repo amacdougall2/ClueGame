@@ -17,6 +17,8 @@ public class Board {
 	private BoardCell[][] grid;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String playerConfigFile;
+	private String weaponConfigFile;
 	private int numRows;
 	private int numCols;
 	public Solution theAnswer;
@@ -69,6 +71,16 @@ public class Board {
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		gridSetup();
+	}
+	
+	//Sets up Player data
+	private void playerSetup() {
+		
+	}
+	
+	//Sets up Weapon Data
+	private void weaponSetup() {
+		
 	}
 		
 	//Sets up the legend Matrix
@@ -308,11 +320,18 @@ public class Board {
 	}
 	
 	//Allows choosing of config Files
+	public void setConfigFiles(String layout, String legend, String players, String weapons) {
+		boardConfigFile = layout;
+		roomConfigFile = legend;
+		playerConfigFile = players;
+		weaponConfigFile = weapons;
+	}
+	
 	public void setConfigFiles(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
-		
 	}
+	
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
