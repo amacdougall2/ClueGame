@@ -19,6 +19,7 @@ public class Custom_BoardAdjTargetTests {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
 	private static Board board;
+	
 	@BeforeClass
 	public static void setUp() {
 		// Board is singleton, get the only instance
