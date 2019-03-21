@@ -45,4 +45,38 @@ public class Player {
 		this.column = column;
 		this.color = convertColor(color);
 	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public Set<Card> getMyCards() {
+		return myCards;
+	}
+
+	public Set<Card> getSeenCards() {
+		return seenCards;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "]";
+	}
+	
 }

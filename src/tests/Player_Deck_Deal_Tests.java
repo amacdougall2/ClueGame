@@ -1,7 +1,9 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -28,18 +30,29 @@ public class Player_Deck_Deal_Tests {
 	@Test
 	public void loadPlayers() {
 		ArrayList<Player> players = board.getPlayers();
-		Player testPlayer = new HumanPlayer("Dave",1,1,"Red");
-		assertTrue(players.contains(testPlayer));
+		Player testPlayer = board.findPlayer("Dave");
+		//board.printPlayers(); //This is used for debugging
+		assertTrue(testPlayer != null);
+		assertEquals(5, testPlayer.getRow());
+		assertEquals(0, testPlayer.getColumn());
+		assertTrue(testPlayer.getColumn() == 0);
+		assertTrue(testPlayer.getColor() == Color.RED);
 		assertTrue(players.size() == board.NUM_PLAYERS);
 	}
 	
 	@Test
 	public void loadDeck() {
 		Set<Card> deck = board.getDeck();
-		assertTrue(deck.contains(new Card("Spoon", CardType.Weapon)));
-		assertTrue(deck.contains(new Card("Sherpa House", CardType.Room)));
-		assertTrue(deck.contains(new Card("Dave", CardType.Person)));
-		assertTrue(deck.size() == board.DECK_SIZE);
+		Card test = board.findCard("Spoon");
+		assertTrue(test != null);
+		assertTrue(test.getType() == CardType.Weapon);
+		test = board.findCard("Sherpa House");
+		assertTrue(test != null);
+		assertTrue(test.getType() == CardType.Room);
+		test = board.findCard("Dave");
+		assertTrue(test != null);
+		assertTrue(test.getType() == CardType.Person);
+		assertEquals(deck.size(), board.DECK_SIZE);
 		
 	}
 	

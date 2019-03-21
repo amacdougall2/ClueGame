@@ -24,7 +24,7 @@ public class Board {
 	public Solution theAnswer;
 	public ArrayList<Player> players;
 	public Set<Card> deck;
-	public final int DECK_SIZE = 18; //18 is a temporary value for now
+	public final int DECK_SIZE = 21; //18 is a temporary value for now
 	public final int NUM_PLAYERS = 6;
 	final int MAX_BOARD_SIZE = 70;
 	
@@ -42,24 +42,22 @@ public class Board {
 		legend = new HashMap<Character,String>();
 		players = new ArrayList<Player>();
 		deck = new HashSet<Card>();
-		//Try-Catch phases in this function so that they can be handled here
-		try {
-			legendSetup();
-		} catch (FileNotFoundException | BadConfigFormatException e) {
-			System.out.println("Incorrect file formatting");
-		}
 		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		try {
-			gridSetup();
-		} catch (FileNotFoundException | BadConfigFormatException e) {
-			e.printStackTrace();
-		}
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
+		//Try-Catch phases in this function so that they can be handled here
+		loadConfigFiles();
 		calcAdjacencies();
 	}
 	
-	public void loadConfigFiles() {
-		
+	public void loadConfigFiles() { //Used for testing configuration loading
+		try {
+			playerSetup();
+			loadRoomConfig();
+			loadBoardConfig();
+			weaponSetup();
+		} catch (FileNotFoundException | BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//This is setup this way so that legendSetup can be left private after Testing is finished
@@ -75,13 +73,46 @@ public class Board {
 	}
 	
 	//Sets up Player data
-	private void playerSetup() {
-		
+	private void playerSetup() throws FileNotFoundException {
+		FileReader playerFile = new FileReader(playerConfigFile);
+		String line;
+		BufferedReader scan = new BufferedReader(playerFile);
+		try {
+			while ((line = scan.readLine()) != null) {//Loads in the Values for each player
+				String[] inputValues = line.split(",");
+				players.add(new Player(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
+				deck.add(new Card(inputValues[0], CardType.Person));
+			}
+			playerFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			scan.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Sets up Weapon Data
-	private void weaponSetup() {
-		
+	private void weaponSetup() throws FileNotFoundException {
+		FileReader weaponFile = new FileReader(weaponConfigFile);
+		String line;
+		BufferedReader scan = new BufferedReader(weaponFile);
+		try {
+			while ((line = scan.readLine()) != null) {//Loads in the Values for each player
+				String[] inputValues = line.split(",");
+				deck.add(new Card(inputValues[0], CardType.Weapon));
+			}
+			weaponFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			scan.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 		
 	//Sets up the legend Matrix
@@ -93,14 +124,16 @@ public class Board {
 			while ((line = scan.readLine()) != null) {//Loads in the three values of each legend space
 				String[] inputValues = line.split(",");
 				legend.put(inputValues[0].charAt(0), inputValues[1].substring(1));
-				
+				if (inputValues[2].substring(1).equals("Card")) {
+					deck.add(new Card(inputValues[1].substring(1), CardType.Room));
+				}
 				//TODO: FIX this error throw statement below
-				/*if (inputValues[2].substring(1) == "Card" || inputValues[2].substring(1) == "Other" ) {
-					System.out.println(inputValues[2].substring(1));
+				if (inputValues[2].substring(1).equals("Card")|| inputValues[2].substring(1).equals("Other")) {
+					//System.out.println(inputValues[2].substring(1));
 				}else {
 					System.out.println(inputValues[2]);
 					throw new BadConfigFormatException(roomConfigFile);
-				}*/
+				}
 			}
 			legendFile.close();
 		} catch (IOException e) {
@@ -337,6 +370,24 @@ public class Board {
 		roomConfigFile = legend;
 	}
 	
+	public Card findCard(String name) {
+		for (Card c : deck) {
+			if (c.getCardName().equals(name)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public Player findPlayer(String name) {
+		for (Player p : players) {
+			if (p.getPlayerName().equals(name)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
@@ -348,6 +399,12 @@ public class Board {
 	}
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+	
+	public void printPlayers() {
+		for (Player p : players) {
+			System.out.println(p);
+		}
 	}
 	
 	
