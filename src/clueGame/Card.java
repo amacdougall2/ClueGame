@@ -8,6 +8,17 @@ public class Card {
 		return false;
 	}
 
+	public Card(String cardName) {
+		super();
+		this.cardName = cardName;
+	}
+
+	public Card(String cardName, CardType type) {
+		super();
+		this.cardName = cardName;
+		this.type = type;
+	}
+
 	public String getCardName() {
 		return cardName;
 	}

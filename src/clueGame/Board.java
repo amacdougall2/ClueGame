@@ -22,25 +22,26 @@ public class Board {
 	private int numRows;
 	private int numCols;
 	public Solution theAnswer;
-	public Player[] players;
-	public Card[] deck;
-	final int DECK_SIZE = 18; //18 is a temporary value for now
-	final int NUM_PLAYERS = 6;
+	public ArrayList<Player> players;
+	public Set<Card> deck;
+	public final int DECK_SIZE = 18; //18 is a temporary value for now
+	public final int NUM_PLAYERS = 6;
 	final int MAX_BOARD_SIZE = 70;
 	
 	// variable used for singleton pattern
-		private static Board theInstance = new Board();
-		// constructor is private to ensure only one can be created
+	private static Board theInstance = new Board();
+	// constructor is private to ensure only one can be created
 		private Board() {}
 		// this method returns the only Board
 		public static Board getInstance() {
 			return theInstance;
-		}
+	}
 	
 	// Initializes the internal Variables and calculates the adjacencies
 	public void initialize(){
 		legend = new HashMap<Character,String>();
-		players = new Player[NUM_PLAYERS];
+		players = new ArrayList<Player>();
+		deck = new HashSet<Card>();
 		//Try-Catch phases in this function so that they can be handled here
 		try {
 			legendSetup();
@@ -310,6 +311,10 @@ public class Board {
 		return targets;
 	}
 	
+	public Set<Card> getDeck(){
+		return deck;
+	}
+	
 	// returns the value of a cell
 	public BoardCell getCellAt(int i, int j) {
 		//If statement to prevent out of bound values
@@ -340,6 +345,9 @@ public class Board {
 	}
 	public int getNumColumns() {
 		return numCols;
+	}
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 	
 	
