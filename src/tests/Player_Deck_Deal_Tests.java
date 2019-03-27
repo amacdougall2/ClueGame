@@ -58,6 +58,12 @@ public class Player_Deck_Deal_Tests {
 	
 	@Test
 	public void dealDeck() {
-		
+		board.dealCards();
+		ArrayList<Player> players = board.getPlayers();
+		Player testPlayer = board.findPlayer("Dave");
+		assertEquals(testPlayer.getMyCards().size(), board.DECK_SIZE/board.NUM_PLAYERS, 1);
+		for (Player p : players) {
+			assertEquals(p.getMyCards().size(), board.DECK_SIZE/board.NUM_PLAYERS, 1);
+		}
 	}
 }

@@ -251,14 +251,6 @@ public class Board {
 		
 	}
 	
-	public Set<BoardCell> getAdj(BoardCell input){
-		return adjMtx.get(input);
-	}
-	
-	public Set<BoardCell> getAdjList(int x, int y){
-		return adjMtx.get(grid[x][y]);
-	}
-		
 	public BoardCell check_add(int i, int j, DoorDirection d) {
 		int tar_i=0;//row offset for the one adjacent cell checked from cell i,j
 		int tar_j=0;//col offset for the one adjacent cell checked from cell i,j
@@ -323,6 +315,18 @@ public class Board {
 					findAllTargets(adjCell,pathLength-1);
 				}
 				visited.remove(adjCell); //Removes current location, since this may be recalculated in later steps
+			}
+		}
+	}
+	
+	public void dealCards() {
+		int counter = 0; //Counter that keeps track of current player
+		for (Card c : deck) {
+			players.get(counter).addCard(c);
+			if (counter < NUM_PLAYERS-1) {
+				counter++;
+			}else {
+				counter = 0;
 			}
 		}
 	}
@@ -401,11 +405,27 @@ public class Board {
 		return players;
 	}
 	
+	public Set<BoardCell> getAdj(BoardCell input){
+		return adjMtx.get(input);
+	}
+	
+	public Set<BoardCell> getAdjList(int x, int y){
+		return adjMtx.get(grid[x][y]);
+	}
+		
 	public void printPlayers() {
 		for (Player p : players) {
 			System.out.println(p);
 		}
 	}
+	
+	public void printDeck() {
+		for (Card d : deck) {
+			System.out.println(d);
+		}
+	}
+	
+	
 	
 	
 }
