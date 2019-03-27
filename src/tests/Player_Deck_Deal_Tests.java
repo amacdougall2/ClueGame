@@ -65,5 +65,10 @@ public class Player_Deck_Deal_Tests {
 		for (Player p : players) {
 			assertEquals(p.getMyCards().size(), board.DECK_SIZE/board.NUM_PLAYERS, 1);
 		}
+		int counter = 0;
+		for (Player p : players) {
+			counter = counter + p.getMyCards().size();
+		}
+		assertEquals(board.DECK_SIZE, counter);
 	}
 }
