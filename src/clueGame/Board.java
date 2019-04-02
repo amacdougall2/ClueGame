@@ -119,6 +119,7 @@ public class Board {
 	private void legendSetup() throws FileNotFoundException, BadConfigFormatException {
 		FileReader legendFile = new FileReader(roomConfigFile);
 		String line;
+		@SuppressWarnings("resource")
 		BufferedReader scan = new BufferedReader(legendFile);
 		try {
 			while ((line = scan.readLine()) != null) {//Loads in the three values of each legend space
@@ -127,7 +128,6 @@ public class Board {
 				if (inputValues[2].substring(1).equals("Card")) {
 					deck.add(new Card(inputValues[1].substring(1), CardType.Room));
 				}
-				//TODO: FIX this error throw statement below
 				if (inputValues[2].substring(1).equals("Card")|| inputValues[2].substring(1).equals("Other")) {
 					//System.out.println(inputValues[2].substring(1));
 				}else {
