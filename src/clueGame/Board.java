@@ -35,6 +35,7 @@ public class Board {
 		// this method returns the only Board
 		public static Board getInstance() {
 			return theInstance;
+			
 	}
 	
 	// Initializes the internal Variables and calculates the adjacencies
@@ -80,7 +81,7 @@ public class Board {
 		try {
 			while ((line = scan.readLine()) != null) {//Loads in the Values for each player
 				String[] inputValues = line.split(",");
-				players.add(new Player(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
+				players.add(new ComputerPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
 				deck.add(new Card(inputValues[0], CardType.Person));
 			}
 			playerFile.close();
