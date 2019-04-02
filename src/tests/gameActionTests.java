@@ -60,12 +60,40 @@ public class gameActionTests {
 		
 	}
 	@Test
-	public void makeAccusation() {
+	public void makeAccusationTest() {
+		Solution accusation = new Solution("Phil","Koorstek","Spoon");
+		Solution answer = new Solution("Phil","Koorstek","Spoon");
 		
+		//solution that is correct
+		answer = new Solution("Phil","McDonalds","Spoon");
+		assertTrue(accusation.equals(answer));
+		
+		//solution with wrong person
+		answer = new Solution("Dave","Koorstek","Spoon");
+		assertFalse(accusation.equals(answer));
+		
+		//solution with wrong weapon
+		answer = new Solution("Phil","Koorstek","Spork");
+		assertFalse(accusation.equals(answer));
+		
+		//solution with wrong room
+		answer = new Solution("Phil","Conservatory","Spoon");
+		assertFalse(accusation.equals(answer));
 	}
 	@Test
 	public void createSuggestion() {
+		//Computer Player enters room
+		ComputerPlayer player = (ComputerPlayer) board.getPlayers().get(1);		
 		
+		
+		//Computer Player Creates Sugggestion
+		Solution suggestion = player.createSuggestion();
+		
+		//Room matches current location
+		//If only one weapon not seen, it's selected
+		//If only one person not seen, it's selected (can be same test as weapon)
+		//If multiple weapons not seen, one of them is randomly selected
+		//If multiple persons not seen, one of them is randomly selected
 	}
 	@Test
 	public void disproveSuggestion() {

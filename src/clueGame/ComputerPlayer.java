@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
-	public void makeAccusation() {
-		
+	public Solution makeAccusation() {
+		return null;
 	}
 	
 	public void createSuggestion() {
