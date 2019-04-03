@@ -336,7 +336,7 @@ public class Board {
 		
 	}
 	
-	public Card handleSuggestion() { //TO BE DETERMINED
+	public Card handleSuggestion(Solution suggestion,Player p) { //TO BE DETERMINED
 		return null;
 	}
 	
@@ -427,6 +427,11 @@ public class Board {
 	}
 	public String legend(char c) {
 		return legend.get(c);
+	}
+	public void addPlayer(Player p) {
+		// TODO Auto-generated method stub
+		players.add(p);
+		
 	}
 	
 	

@@ -23,6 +23,9 @@ public class Player {
 		myCards.add(newCard);
 		seenCards.add(newCard);
 	}
+	public void addCard(String s, CardType c) {
+		addCard(new Card(s,c));
+	}
 	
 	public Color convertColor(String strColor) {
 		 Color color;
@@ -83,6 +86,11 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "]";
+	}
+
+	public Solution createSuggestion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

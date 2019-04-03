@@ -91,7 +91,7 @@ public class gameActionTests {
 		
 		//Room matches current location
 		char playerRoomC = board.getCellAt(player.getRow(),player.getColumn()).getInitial();
-		AssertEquals(board.legend(playerRoomC),suggestion.room);
+		assertEquals(board.legend(playerRoomC),suggestion.room);
 		//add all but 2 weapons
 		player.addCard(new Card("Spoon",CardType.Weapon));
 		player.addCard(new Card("Spork",CardType.Weapon));
@@ -154,9 +154,50 @@ public class gameActionTests {
 	}
 	@Test
 	public void handleSuggestion() {
+		//Null if no one can disprove suggestion
+		Player player = board.getPlayers().get(0);
+		Solution suggestion = new Solution("Drax","Space","Axe");
+		Card handle = board.handleSuggestion(suggestion,board.getPlayers().get(0));
+		assertTrue(handle==null);
+		
+		//Card from suggestors deck
+		suggestion = ((ComputerPlayer)player).createSuggestion();
+		Set<Card> privates = player.getSeenCards();
+		handle = board.handleSuggestion(suggestion,player);
+		assertTrue(handle==null);
+		
+		//Card only human can dissprove return card
+		Player bill = new HumanPlayer("bill",0,0,"green");
+		board.addPlayer(bill);
+		Card c1 = new Card("Dude",CardType.Person);
+		bill.addCard(c1);
+		suggestion = new Solution("Dude","Place","Thing");
+		handle = board.handleSuggestion(suggestion,player);
+		assertTrue(c1.equals(handle));
+		
+		//Card only human can dissprove, as the accuser, returns null
+		handle = board.handleSuggestion(suggestion,bill);
+		assertTrue(handle==null);
+		
+		//Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
+		suggestion = new Solution("Ethan","Lab","Fire");
+		Player p1 = board.getPlayers().get(1);
+		Player p2 = board.getPlayers().get(2);
+		Card c0=new Card("Ethan",CardType.Person);
+		Card c2=new Card("Lab",CardType.Room);
+		p1.addCard(c0);
+		p2.addCard(c2);
+		handle = board.handleSuggestion(suggestion, player);
+		assertEquals(c0,handle);
+		
+		//Suggestion that human and another player can disprove, other player is next in list, ensure other player returns answer
+		HumanPlayer p3 = new HumanPlayer("Thomas",0,0,"blue");
+		Card c3= new Card("Fire",CardType.Weapon);
+		p3.addCard(c3);
+		suggestion = new Solution("Jenkins","Lab","Fire");
+		handle = board.handleSuggestion(suggestion, player);
+		assertTrue(handle.equals(c2));
 		
 	}
-	private boolean AssertEquals(String legend, String room) {//helper function for assert equals on strings
-		return legend.equals(room);
-	}
+	
 }
