@@ -123,7 +123,34 @@ public class gameActionTests {
 	
 	@Test
 	public void disproveSuggestion() {
+		ComputerPlayer player = (ComputerPlayer) board.getPlayers().get(0);	
 		
+		
+		
+		
+		
+		player.addCard(new Card("Bob",CardType.Person));
+		Solution suggestion = new Solution("Bob","Koorstek","Spoon");
+		Card refute = player.disproveSuggestion(suggestion);
+		//If player has only one matching card it should be returned
+		assertTrue(false);
+		assertEquals(refute.getCardName(),"Bob");
+		
+		player.addCard(new Card("Spoon",CardType.Weapon));
+		//check that refute chooses cards randomly when >1 options available
+		boolean sPick = false;
+		boolean bPick = false;
+		for(int i= 0;i<100;i++) {
+			refute = player.disproveSuggestion(suggestion);
+			if(refute.getCardName()=="Spoon") sPick = true;
+			if(refute.getCardName()=="Spoon") bPick = true;
+		}
+		assertTrue(sPick);
+		assertTrue(bPick);
+		
+		//If player has no matching cards, null is returned
+		ComputerPlayer player2 = new ComputerPlayer("Kate",0,0,"black");
+		assertEquals(player2.disproveSuggestion(suggestion),null);
 	}
 	@Test
 	public void handleSuggestion() {
