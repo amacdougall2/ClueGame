@@ -9,7 +9,8 @@ public class ComputerPlayer extends Player {
 		return null;
 	}
 	
-	public void createSuggestion() {
+	public Solution createSuggestion() {
+		return new Solution("","","");
 		//FIXME: TO BE DETERMINED
 	}
 	

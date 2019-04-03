@@ -425,6 +425,9 @@ public class Board {
 			System.out.println(d);
 		}
 	}
+	public String legend(char c) {
+		return legend.get(c);
+	}
 	
 	
 	

@@ -90,11 +90,37 @@ public class gameActionTests {
 		Solution suggestion = player.createSuggestion();
 		
 		//Room matches current location
-		//If only one weapon not seen, it's selected
-		//If only one person not seen, it's selected (can be same test as weapon)
+		char playerRoomC = board.getCellAt(player.getRow(),player.getColumn()).getInitial();
+		AssertEquals(board.legend(playerRoomC),suggestion.room);
+		//add all but 2 weapons
+		player.addCard(new Card("Spoon",CardType.Weapon));
+		player.addCard(new Card("Spork",CardType.Weapon));
+		player.addCard(new Card("Fpoon",CardType.Weapon));
+		player.addCard(new Card("Ladle",CardType.Weapon));
+		suggestion = player.createSuggestion();
 		//If multiple weapons not seen, one of them is randomly selected
+		assertTrue(suggestion.weapon.equals("Blender")||suggestion.weapon.equals("Rifle"));
+		//add all but 2 people
+		player.addCard(new Card("Dave",CardType.Person));
+		player.addCard(new Card("Phil",CardType.Person));
+		player.addCard(new Card("Billy",CardType.Person));
+		player.addCard(new Card("Jimothy",CardType.Person));
+		suggestion = player.createSuggestion();
+		
 		//If multiple persons not seen, one of them is randomly selected
+		assertTrue(suggestion.person.equals("Bob")||suggestion.person.equals("Fransisca"));
+		
+		//add 1 weapon and 1 person, redo suggestion
+		player.addCard(new Card("Bob",CardType.Person));
+		player.addCard(new Card("Rifle",CardType.Weapon));
+		suggestion = player.createSuggestion();
+		
+		//If only one weapon and person not seen, it's selected
+		assertEquals(suggestion.weapon,"Blender");
+		assertEquals(suggestion.person,"Fransisca");
+		
 	}
+	
 	@Test
 	public void disproveSuggestion() {
 		
@@ -102,5 +128,8 @@ public class gameActionTests {
 	@Test
 	public void handleSuggestion() {
 		
+	}
+	private boolean AssertEquals(String legend, String room) {//helper function for assert equals on strings
+		return legend.equals(room);
 	}
 }
