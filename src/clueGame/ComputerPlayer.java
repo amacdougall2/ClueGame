@@ -47,7 +47,6 @@ public class ComputerPlayer extends Player {
 				unseenWeapons.add(card);
 			}
 		}
-		Random rand = new Random();
 		String person = randomCard(unseenPeople).getCardName();
 		String weapon = randomCard(unseenWeapons).getCardName();
 		mySuggestion = new Solution(person, currentRoom, weapon);
