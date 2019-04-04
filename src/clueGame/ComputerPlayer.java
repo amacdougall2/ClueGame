@@ -1,3 +1,4 @@
+// Authors: Allan MacDougall, Tyler Zudans
 package clueGame;
 
 import java.awt.Color;

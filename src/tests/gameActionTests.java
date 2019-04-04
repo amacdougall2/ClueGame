@@ -1,15 +1,14 @@
+// Authors: Allan MacDougall, Tyler Zudans
 package tests;
 
 import static org.junit.Assert.*;
-
 import java.util.Set;
-
 import org.junit.*;
-
 import clueGame.*;
 
 public class gameActionTests {
 	private static Board board;
+	
 	@BeforeClass
 	public static void setup() {
 		board = Board.getInstance();
@@ -66,7 +65,7 @@ public class gameActionTests {
 		board.setAnswer(answer);
 		
 		
-		//solution that is correct
+		//accusation that is correct
 		acc = new Solution("Phil","Koorstek","Spoon");
 		assertTrue(board.checkAccusation(acc));
 		
@@ -82,6 +81,7 @@ public class gameActionTests {
 		acc = new Solution("Phil","Conservatory","Spoon");
 		assertFalse(board.checkAccusation(acc));
 	}
+	
 	@Test
 	public void createSuggestion() {
 		//Computer Player enters room
@@ -93,6 +93,7 @@ public class gameActionTests {
 		//Room matches current location
 		char playerRoomC = board.getCellAt(player.getRow(),player.getColumn()).getInitial();
 		assertEquals(board.legend(playerRoomC),suggestion.room);
+		
 		//add all but 2 weapons
 		player.addCard(new Card("Spoon",CardType.Weapon));
 		player.addCard(new Card("Spork",CardType.Weapon));
@@ -125,11 +126,6 @@ public class gameActionTests {
 	@Test
 	public void disproveSuggestion() {
 		ComputerPlayer player = new ComputerPlayer("Chad",0,0,"blue");	
-		
-		
-		
-		
-		
 		player.addCard(new Card("Bob",CardType.Person));
 		Solution suggestion = new Solution("Bob","Koorstek","Splife");
 		Card refute = player.disproveSuggestion(suggestion);
@@ -152,6 +148,7 @@ public class gameActionTests {
 		ComputerPlayer player2 = new ComputerPlayer("Kate",0,0,"black");
 		assertEquals(player2.disproveSuggestion(suggestion),null);
 	}
+	
 	@Test
 	public void handleSuggestion() {
 		//Null if no one can disprove suggestion
@@ -166,7 +163,7 @@ public class gameActionTests {
 		handle = board.handleSuggestion(suggestion,player);
 		assertTrue(handle==null);
 		
-		//Card only human can dissprove return card
+		//Card only human can disprove return card
 		Player bill = new HumanPlayer("bill",0,0,"green");
 		board.addPlayer(bill);
 		Card c1 = new Card("Dude",CardType.Person);
