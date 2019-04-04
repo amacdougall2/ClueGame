@@ -15,4 +15,8 @@ public class Solution {
 	public boolean equals(Solution other) {
 		return(this.person.equals(other.person) && this.room.equals(other.room) && this.weapon.equals(other.weapon));
 	}
+	@Override
+	public String toString() {
+		return "Solution [person=" + person + ", room=" + room + ", weapon=" + weapon + "]";
+	}
 }

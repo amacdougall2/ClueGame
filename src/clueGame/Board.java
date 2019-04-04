@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Board {
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
-	private Map<Character,String> legend;
+	public Map<Character,String> legend;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private BoardCell[][] grid;
@@ -47,6 +47,7 @@ public class Board {
 		adjMtx= new HashMap<BoardCell, Set<BoardCell>>();
 		//Try-Catch phases in this function so that they can be handled here
 		loadConfigFiles();
+		setPlayerDecks();
 		calcAdjacencies();
 	}
 	
@@ -389,6 +390,13 @@ public class Board {
 			if (p.getPlayerName().equals(name)) {
 				return p;
 			}
+		}
+		return null;
+	}
+	
+	public Player setPlayerDecks() {
+		for (Player p : players) {
+			p.setDeck(deck);
 		}
 		return null;
 	}

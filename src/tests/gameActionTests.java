@@ -51,17 +51,12 @@ public class gameActionTests {
 			}else if (selected.equals(board.getCellAt(3, 6))) {
 				loc_3_6 = true;
 			}else {
-				assertEquals(board.getCellAt(1, 6), selected);
-				System.out.println(selected);
 				fail("Invalid target selected");
 			}
 		}
 		// Ensure each target was selected at least once
 		assertTrue(loc_2_5);
 		assertTrue(loc_3_6);
-		
-		
-		
 		
 	}
 	@Test
@@ -88,8 +83,7 @@ public class gameActionTests {
 	@Test
 	public void createSuggestion() {
 		//Computer Player enters room
-		ComputerPlayer player = (ComputerPlayer) board.getPlayers().get(1);		
-		
+		ComputerPlayer player = (ComputerPlayer) board.getPlayers().get(1);
 		
 		//Computer Player Creates Sugggestion
 		Solution suggestion = player.createSuggestion();
@@ -104,15 +98,16 @@ public class gameActionTests {
 		player.addCard(new Card("Ladle",CardType.Weapon));
 		suggestion = player.createSuggestion();
 		//If multiple weapons not seen, one of them is randomly selected
-		assertTrue(suggestion.weapon.equals("Blender")||suggestion.weapon.equals("Rifle"));
+		assert(suggestion.weapon.equals("Blender")||suggestion.weapon.equals("Rifle"));
 		//add all but 2 people
 		player.addCard(new Card("Dave",CardType.Person));
 		player.addCard(new Card("Phil",CardType.Person));
 		player.addCard(new Card("Billy",CardType.Person));
-		player.addCard(new Card("Jimothy",CardType.Person));
+		player.addCard(new Card("Jimmothy",CardType.Person));
 		suggestion = player.createSuggestion();
 		
 		//If multiple persons not seen, one of them is randomly selected
+		System.out.println(suggestion);
 		assertTrue(suggestion.person.equals("Bob")||suggestion.person.equals("Fransisca"));
 		
 		//add 1 weapon and 1 person, redo suggestion

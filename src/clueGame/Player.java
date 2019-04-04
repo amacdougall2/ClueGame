@@ -8,12 +8,14 @@ import java.util.Set;
 public class Player {
 	
 
-	private String playerName;
-	private int row;
-	private int column;
-	private Color color;
-	private Set<Card> myCards = new HashSet<Card>();
-	private Set<Card> seenCards = new HashSet<Card>();
+	protected String playerName;
+	protected String currentRoom = "Walkway"; //Defaults to walkway, as all players spawn at walkways
+	protected int row;
+	protected int column;
+	protected Color color;
+	protected Set<Card> myCards = new HashSet<Card>();
+	protected Set<Card> seenCards = new HashSet<Card>();
+	protected Set<Card> deck = new HashSet<Card>();
 	
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
@@ -23,6 +25,7 @@ public class Player {
 		myCards.add(newCard);
 		seenCards.add(newCard);
 	}
+	
 	public void addCard(String s, CardType c) {
 		addCard(new Card(s,c));
 	}
@@ -81,6 +84,18 @@ public class Player {
 
 	public Set<Card> getSeenCards() {
 		return seenCards;
+	}
+	
+	public String getCurrentRoom() {
+		return currentRoom;
+	}
+
+	public void setCurrentRoom(String currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+
+	public void setDeck(Set<Card> inDeck) {
+		deck = inDeck;
 	}
 
 	@Override
