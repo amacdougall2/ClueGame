@@ -23,18 +23,18 @@ public class gameActionTests {
 		ComputerPlayer player = (ComputerPlayer) board.getPlayers().get(1);//Phil at 0,6
 		board.calcTargets(player.getRow(),player.getColumn(),3);
 		Set<BoardCell> targets = board.getTargets();
-		BoardCell endLocation = player.pickLocation(targets);
+		BoardCell endLocation = player.pickLocation(targets, board.getCellAt(0, 6));
 		assertTrue(targets.contains(endLocation));
 		
 		//If room is available and not just visited, select it
 		player = (ComputerPlayer) board.getPlayers().get(1);//Phil at 0,6
 		board.calcTargets(player.getRow(),player.getColumn(),4);
 		targets = board.getTargets();
-		endLocation = player.pickLocation(targets);
+		endLocation = player.pickLocation(targets, board.getCellAt(0, 6));
 		assertTrue(endLocation.isRoom());//endLocation Room is C Test 1
-		endLocation = player.pickLocation(targets);
+		endLocation = player.pickLocation(targets, board.getCellAt(0, 6));
 		assertTrue(endLocation.isRoom());//endLocation Room is C Test 2
-		endLocation = player.pickLocation(targets);
+		endLocation = player.pickLocation(targets, board.getCellAt(0, 6));
 		assertTrue(endLocation.isRoom());//endLocation Room is C Test 3
 		
 		//Show that each cell is selected and that no invalid ones are
@@ -42,14 +42,19 @@ public class gameActionTests {
 		boolean loc_2_5 = false;
 		boolean loc_3_6 = false;
 
+		board.calcTargets(player.getRow(),player.getColumn(),3);
+		
 		for (int i=0; i<100; i++) {
-			BoardCell selected = player.pickLocation(board.getTargets());
-			if (selected == board.getCellAt(2, 5))
+			BoardCell selected = player.pickLocation(board.getTargets(), board.getCellAt(0, 6));
+			if (selected.equals(board.getCellAt(2, 5))) {
 				loc_2_5 = true;
-			else if (selected == board.getCellAt(3, 6))
+			}else if (selected.equals(board.getCellAt(3, 6))) {
 				loc_3_6 = true;
-			else
+			}else {
+				assertEquals(board.getCellAt(1, 6), selected);
+				System.out.println(selected);
 				fail("Invalid target selected");
+			}
 		}
 		// Ensure each target was selected at least once
 		assertTrue(loc_2_5);
