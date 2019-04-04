@@ -172,7 +172,7 @@ public class gameActionTests {
 		bill.addCard(c1);
 		suggestion = new Solution("Dude","Place","Thing");
 		handle = board.handleSuggestion(suggestion,player);
-		assertTrue(c1.equals(handle));
+		assertEquals(c1,handle);
 		
 		//Card only human can dissprove, as the accuser, returns null
 		handle = board.handleSuggestion(suggestion,bill);
@@ -195,7 +195,7 @@ public class gameActionTests {
 		p3.addCard(c3);
 		suggestion = new Solution("Jenkins","Lab","Fire");
 		handle = board.handleSuggestion(suggestion, player);
-		assertTrue(handle.equals(c2));
+		assertEquals(handle,c2);
 		
 	}
 	

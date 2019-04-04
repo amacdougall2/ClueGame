@@ -12,6 +12,7 @@ public class ComputerPlayer extends Player {
 	public Solution makeAccusation() {
 		return null;
 	}
+	@Override
 	public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> options = new ArrayList<Card>();//cards that can be used to disprove
 		for(Card c:this.seenCards) {

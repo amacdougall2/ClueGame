@@ -338,6 +338,13 @@ public class Board {
 	}
 	
 	public Card handleSuggestion(Solution suggestion,Player p) { //TO BE DETERMINED
+		int pIndex = getPlayers().indexOf(p);
+		int numP = getPlayers().size();
+		for(int i=pIndex+1;i<pIndex+numP;i++) {//cycles around the accuser not inclusive
+			int j = i%numP;
+			Card potDisprove = getPlayers().get(j).disproveSuggestion(suggestion);
+			if(potDisprove!=null) return potDisprove;
+		}
 		return null;
 	}
 	
