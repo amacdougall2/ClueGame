@@ -61,24 +61,26 @@ public class gameActionTests {
 	}
 	@Test
 	public void makeAccusationTest() {
-		Solution accusation = new Solution("Phil","Koorstek","Spoon");
+		Solution acc;
 		Solution answer = new Solution("Phil","Koorstek","Spoon");
+		board.setAnswer(answer);
+		
 		
 		//solution that is correct
-		answer = new Solution("Phil","McDonalds","Spoon");
-		assertTrue(accusation.equals(answer));
+		acc = new Solution("Phil","Koorstek","Spoon");
+		assertTrue(board.checkAccusation(acc));
 		
 		//solution with wrong person
-		answer = new Solution("Dave","Koorstek","Spoon");
-		assertFalse(accusation.equals(answer));
+		acc = new Solution("Dave","Koorstek","Spoon");
+		assertFalse(board.checkAccusation(acc));
 		
 		//solution with wrong weapon
-		answer = new Solution("Phil","Koorstek","Spork");
-		assertFalse(accusation.equals(answer));
+		acc = new Solution("Phil","Koorstek","Spork");
+		assertFalse(board.checkAccusation(acc));
 		
 		//solution with wrong room
-		answer = new Solution("Phil","Conservatory","Spoon");
-		assertFalse(accusation.equals(answer));
+		acc = new Solution("Phil","Conservatory","Spoon");
+		assertFalse(board.checkAccusation(acc));
 	}
 	@Test
 	public void createSuggestion() {
@@ -107,7 +109,6 @@ public class gameActionTests {
 		suggestion = player.createSuggestion();
 		
 		//If multiple persons not seen, one of them is randomly selected
-		System.out.println(suggestion);
 		assertTrue(suggestion.person.equals("Bob")||suggestion.person.equals("Fransisca"));
 		
 		//add 1 weapon and 1 person, redo suggestion

@@ -349,7 +349,7 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
-		return false;
+		return accusation.equals(theAnswer);
 	}
 	
 	//returns the targets list
@@ -448,7 +448,9 @@ public class Board {
 		players.add(p);
 		
 	}
-	
+	public void setAnswer (Solution s) {
+		theAnswer=s;
+	}
 	
 	
 	

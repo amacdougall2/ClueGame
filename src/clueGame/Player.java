@@ -107,5 +107,7 @@ public class Player {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	public void makeAccusation(Solution s) {
+		
+	}
 }
