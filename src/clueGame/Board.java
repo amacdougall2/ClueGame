@@ -3,13 +3,17 @@
  * Note: To get the failed tests, simply remove implementations from successful test Classes.
  */
 package clueGame;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Board {
+import javax.swing.*;
+
+public class Board extends JPanel{
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	public Map<Character,String> legend;
 	private Set<BoardCell> visited;
@@ -31,11 +35,10 @@ public class Board {
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
-		private Board() {}
-		// this method returns the only Board
-		public static Board getInstance() {
+	private Board() {}
+	// this method returns the only Board
+	public static Board getInstance() {
 			return theInstance;
-			
 	}
 	
 	// Initializes the internal Variables and calculates the adjacencies
@@ -49,6 +52,7 @@ public class Board {
 		loadConfigFiles();
 		setPlayerDecks();
 		calcAdjacencies();
+		GUISetup();
 	}
 	
 	public void loadConfigFiles() { //Used for testing configuration loading
@@ -452,6 +456,21 @@ public class Board {
 		theAnswer=s;
 	}
 	
+	/*
+	 * GUI CODE BELOW
+	 */
 	
+	public void paintComponent() {
+		for(BoardCell[] segment: grid) {
+			for(BoardCell cell: segment) {
+				cell.draw();
+			}
+		}
+	}
+	
+	public void GUISetup() {
+		setSize(new Dimension(700,300));
+		setLayout(new GridLayout(numRows,numCols));
+	}
 	
 }

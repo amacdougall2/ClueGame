@@ -4,6 +4,8 @@
  */
 package clueGame;
 
+import javax.swing.*;
+
 public class BoardCell {
 	//Stores the row and collumn of a cell, uses constructor to set theses values
 	private int row;
@@ -74,6 +76,14 @@ public class BoardCell {
 	}
 	public String toString() {
 		return ("Row: "+row+" Col:"+col);
+	}
+	
+	/*
+	 * GUI CODE BELOW
+	 */
+	
+	public void draw() {
+		
 	}
 	
 }
