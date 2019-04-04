@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -10,6 +11,19 @@ public class ComputerPlayer extends Player {
 	
 	public Solution makeAccusation() {
 		return null;
+	}
+	public Card disproveSuggestion(Solution suggestion) {
+		ArrayList<Card> options = new ArrayList<Card>();//cards that can be used to disprove
+		for(Card c:this.seenCards) {
+			String cName=c.getCardName();
+			if(cName.equals(suggestion.person)||cName.equals(suggestion.room)||cName.equals(suggestion.weapon)) options.add(c);
+		}
+		if(options.isEmpty()==true) return null;
+		else {
+			Random rand = new Random();
+			int index = rand.nextInt(options.size());
+			return options.get(index);
+		}
 	}
 	
 	public Solution createSuggestion() {
