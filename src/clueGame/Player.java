@@ -2,6 +2,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
@@ -108,7 +109,20 @@ public class Player {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	public void makeAccusation(Solution s) {
 		
 	}
+	
+	/*
+	 * GUI Code Below
+	 */
+	
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(column*25, row*25, 25, 25);
+		g.setColor(Color.black);
+		g.drawOval(column*25, row*25, 25, 25);
+	}
+	
 }

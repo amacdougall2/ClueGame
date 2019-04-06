@@ -4,6 +4,9 @@
  */
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.*;
 
 public class BoardCell {
@@ -82,7 +85,35 @@ public class BoardCell {
 	 * GUI CODE BELOW
 	 */
 	
-	public void draw() {
+	public void draw(Graphics g, Board board) {
+		if (isWalkway()) {
+			g.setColor(Color.YELLOW);
+			g.fillRect(col*25, row*25, 25, 25);
+			g.setColor(Color.BLACK);
+			g.drawRect(col*25, row*25, 25, 25);
+		}else {
+			g.setColor(Color.lightGray);
+			g.fillRect(col*25, row*25, 25, 25);
+			g.setColor(Color.darkGray);
+			switch(doorInitial){
+				case NONE:
+					break;
+				case LEFT:
+					g.fillRect(col*25, row*25, 5, 25);
+					break;
+				case DOWN:
+					g.fillRect(col*25, (row*25) + 20, 25, 5);
+					break;
+				case UP:
+					g.fillRect(col*25, row*25, 25, 5);
+					break;
+				case RIGHT:
+					g.fillRect((col*25) +20, row*25, 5, 25);
+					break;
+				default:
+					break;
+			}
+		}
 		
 	}
 	

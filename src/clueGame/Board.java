@@ -3,7 +3,10 @@
  * Note: To get the failed tests, simply remove implementations from successful test Classes.
  */
 package clueGame;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -52,7 +55,6 @@ public class Board extends JPanel{
 		loadConfigFiles();
 		setPlayerDecks();
 		calcAdjacencies();
-		GUISetup();
 	}
 	
 	public void loadConfigFiles() { //Used for testing configuration loading
@@ -459,18 +461,43 @@ public class Board extends JPanel{
 	/*
 	 * GUI CODE BELOW
 	 */
-	
-	public void paintComponent() {
-		for(BoardCell[] segment: grid) {
-			for(BoardCell cell: segment) {
-				cell.draw();
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		setLayout(new GridLayout(numRows,numCols));
+		
+		//Draw all cells
+		for(int i = 0; i < numRows; i++) {
+			BoardCell[] segment = grid[i];
+			for (int j = 0; j < numCols; j++) {
+				BoardCell cell = segment[j];
+				cell.draw(g, this);
 			}
 		}
+		
+		//Draw all Players
+		for(Player p : players) {
+			p.draw(g);
+		}
+		
+		//Draw the Name of each Room above the room
+		drawName(g,"Coolbaugh Hall", 10, 35);
+		drawName(g, "Koorstek", 10, 450);
+		drawName(g, "Blaster's", 15, 260);
+		drawName(g, "Brew", 15, 280);
+		drawName(g, "Rec", 200, 450);
+		drawName(g, "Center", 200, 470);
+		drawName(g, "Mount Zion", 230, 50);
+		drawName(g, "Aspen", 325, 450);
+		drawName(g, "Hall", 325, 470);
+		drawName(g, "Sherpa House", 475, 450);
+		drawName(g, "Woody's Pizza", 450, 250);
+		drawName(g, "PCJ's House", 450, 75);
 	}
 	
-	public void GUISetup() {
-		setSize(new Dimension(700,300));
-		setLayout(new GridLayout(numRows,numCols));
+	private void drawName(Graphics g, String name,  int col, int row) {
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+		g.setColor(Color.BLACK);
+		g.drawString(name, col, row);
 	}
-	
 }
