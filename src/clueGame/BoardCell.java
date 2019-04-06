@@ -85,7 +85,7 @@ public class BoardCell {
 	 * GUI CODE BELOW
 	 */
 	
-	public void draw(Graphics g, Board board) {
+	public void draw(Graphics g) {
 		if (isWalkway()) {
 			g.setColor(Color.YELLOW);
 			g.fillRect(col*25, row*25, 25, 25);

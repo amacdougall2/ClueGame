@@ -471,7 +471,7 @@ public class Board extends JPanel{
 			BoardCell[] segment = grid[i];
 			for (int j = 0; j < numCols; j++) {
 				BoardCell cell = segment[j];
-				cell.draw(g, this);
+				cell.draw(g);
 			}
 		}
 		
