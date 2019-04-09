@@ -1,3 +1,6 @@
+/*
+ * Authors: Allan MacDougal and Tyler Zudans
+ */
 package tests;
 
 import java.awt.BorderLayout;
@@ -15,7 +18,6 @@ public class ClueGameGUI extends JFrame{
 
 	private Board board;
 	private JMenu fileMenu;
-	private JMenu exitMenu;
 	private JMenuBar bar;
 	
 	public ClueGameGUI() {
@@ -23,23 +25,23 @@ public class ClueGameGUI extends JFrame{
 	}
 	
 	private void setup() {
+		//initialize board
 		board = Board.getInstance();
 		board.setConfigFiles("ClueRooms.csv", "ClueRooms.txt", "Names.txt", "Weapons.txt");
 		board.initialize();
 		
+		//set up menu bar
 		bar = new JMenuBar();
 		fileMenu=new JMenu("File");
 		fileMenu.add(openDetective());
 		fileMenu.add(exit());
-		
 		bar.add(fileMenu);
 		
 	
 		GUI_Setup();
 	}
 	
-	private JMenuItem openDetective() {
-		// TODO Auto-generated method stub
+	private JMenuItem openDetective() {//open detectivenotes upon selection from menu
 		JMenuItem item = new JMenuItem("Detective Notes");
 		class DetectiveOpener implements ActionListener{
 
@@ -53,7 +55,7 @@ public class ClueGameGUI extends JFrame{
 		item.addActionListener(new DetectiveOpener());
 		return item;
 	}
-	private JMenuItem exit() {
+	private JMenuItem exit() {//exit upon selection from menu
 		JMenuItem item = new JMenuItem("Exit");
 		class DetectiveOpener implements ActionListener{
 
