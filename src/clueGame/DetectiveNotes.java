@@ -89,9 +89,6 @@ public class DetectiveNotes extends JFrame {
 		pGuess = getGuess(playerGuess,"Person Guess");
 		rGuess = getGuess(roomGuess,"Room Guess");
 		wGuess = getGuess(weaponGuess,"Weapon Guess");
-		pGuess.revalidate();
-		rGuess.revalidate();
-		wGuess.revalidate();
 		
 	}
 	public void updateDisplay(){
