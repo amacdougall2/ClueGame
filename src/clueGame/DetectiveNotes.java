@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,6 +17,7 @@ public class DetectiveNotes extends JFrame {
 	Set<String> players, rooms, weapons;
 	Map<String,Boolean> seen;
 	Set<String> playerGuess,roomGuess,weaponGuess;
+	JPanel pBox,pGuess,rBox,rGuess,wBox,wGuess;
 	
 	public static void main(String[] args) {
 		DetectiveNotes d = new DetectiveNotes();
@@ -28,21 +31,21 @@ public class DetectiveNotes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Set up player checkboxes and dropdown
-		JPanel pBox = getOptions(players,"People");
+		pBox = getOptions(players,"People");
 		add(pBox);
-		JPanel pGuess = getGuess(playerGuess,"Person Guess");
+		pGuess = getGuess(playerGuess,"Person Guess");
 		add(pGuess);
 		
 		//Rooms
-		JPanel rBox = getOptions(rooms,"Rooms");
+		rBox = getOptions(rooms,"Rooms");
 		add(rBox);
-		JPanel rGuess = getGuess(roomGuess,"Room Guess");
+		rGuess = getGuess(roomGuess,"Room Guess");
 		add(rGuess);
 		
 		//Weapons
-		JPanel wBox = getOptions(weapons,"Weapons");
+		wBox = getOptions(weapons,"Weapons");
 		add(wBox);
-		JPanel wGuess = getGuess(weaponGuess,"Weapon Guess");
+		wGuess = getGuess(weaponGuess,"Weapon Guess");
 		add(wGuess);
 		
 		
@@ -82,12 +85,28 @@ public class DetectiveNotes extends JFrame {
 			}
 		}
 	}
-
+	public void updateBoxes() {
+		pGuess = getGuess(playerGuess,"Person Guess");
+		rGuess = getGuess(roomGuess,"Room Guess");
+		wGuess = getGuess(weaponGuess,"Weapon Guess");
+		pGuess.revalidate();
+		rGuess.revalidate();
+		wGuess.revalidate();
+		
+	}
+	public void updateDisplay(){
+		updateSeen();
+		updateBoxes();
+		
+	}
+		
+		
 	private JPanel getOptions(Set<String> box, String string) {
 		// TODO Auto-generated method stub
 		JPanel panel = new JPanel();
 		for(String s: box) {
 			JCheckBox b = new JCheckBox(s);
+			b.addActionListener(new boxListener(s));
 			panel.add(b);
 		}
 		panel.setBorder(new TitledBorder(new EtchedBorder(),string));
@@ -125,7 +144,23 @@ public class DetectiveNotes extends JFrame {
 		for(String w:weapons)seen.put(w, false);
 		
 		//update
-		updateSeen();
+		updateDisplay();
+		
+	}
+	private class boxListener implements ActionListener{
+		String name;
+		public boxListener(String string) {
+			// TODO Auto-generated constructor stub
+			name=string;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//change name seen to opposite state
+			seen.replace(name, !(seen.get(name)));
+			updateDisplay();
+			
+		}
 		
 	}
 	
