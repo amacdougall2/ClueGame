@@ -5,13 +5,10 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class GameControlGUI extends JFrame{
-	
+public class GameControlGUI extends JPanel{
 	public GameControlGUI() {
 		setSize(new Dimension(700,300));
 		setLayout(new GridLayout(2,3));
-		setTitle("Control Panel");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		JPanel turn = createTurnPanel();
 		add(turn);
 		JPanel nextPlayer = createButton("Next Player");

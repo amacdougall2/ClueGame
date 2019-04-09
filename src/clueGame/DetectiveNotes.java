@@ -12,7 +12,7 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class DetectiveNotes extends JFrame {
+public class DetectiveNotes extends JDialog {
 	Board board;
 	Set<String> players, rooms, weapons;
 	Map<String,Boolean> seen;
@@ -28,7 +28,7 @@ public class DetectiveNotes extends JFrame {
 		setSize(new Dimension(500,1000));
 		setLayout(new GridLayout(3,2));
 		setTitle("Detective Notes");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//Set up player checkboxes and dropdown
 		pBox = getOptions(players,"People");
