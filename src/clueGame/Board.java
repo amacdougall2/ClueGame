@@ -55,6 +55,8 @@ public class Board extends JPanel{
 		loadConfigFiles();
 		setPlayerDecks();
 		calcAdjacencies();
+		dealCards();
+		this.setPreferredSize(new Dimension(25*numCols,25*numRows));
 	}
 	
 	public void loadConfigFiles() { //Used for testing configuration loading

@@ -1,4 +1,4 @@
-package clueGame;
+package GUI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -11,6 +11,11 @@ import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
+import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
+import clueGame.Player;
 
 public class DetectiveNotes extends JDialog {
 	Board board;

@@ -1,4 +1,4 @@
-package clueGame;
+package GUI;
 
 import java.awt.*;
 
@@ -7,8 +7,8 @@ import javax.swing.border.*;
 
 public class GameControlGUI extends JPanel{
 	public GameControlGUI() {
-		setSize(new Dimension(700,300));
-		setLayout(new GridLayout(2,3));
+		//setSize(new Dimension(1000,400));
+		setLayout(new GridLayout(2,1));
 		JPanel turn = createTurnPanel();
 		add(turn);
 		JPanel nextPlayer = createButton("Next Player");
@@ -21,6 +21,34 @@ public class GameControlGUI extends JPanel{
 		add(guess);
 		JPanel result = createBorderedPanel("Guess Result","Response:");
 		add(result);
+		/*JPanel topPanel = createTopPanel();
+		add(topPanel);
+		JPanel botPanel = createBottomPanel();
+		add(botPanel);*/
+	}
+	
+	private JPanel createTopPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,0));
+		JPanel turn = createTurnPanel();
+		panel.add(turn);
+		JPanel nextPlayer = createButton("Next Player");
+		panel.add(nextPlayer);
+		JPanel accuse = createButton("Make an Accusation");
+		panel.add(accuse);
+		return panel;
+	}
+	
+	private JPanel createBottomPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,0));
+		JPanel die = createBorderedPanel("Die","Roll:");
+		add(die);
+		JPanel guess = createBorderedPanel("Guess","Guess:");
+		add(guess);
+		JPanel result = createBorderedPanel("Guess Result","Response:");
+		add(result);
+		return panel;
 	}
 
 	private JPanel createTurnPanel() {
@@ -40,6 +68,7 @@ public class GameControlGUI extends JPanel{
 		//panel.setLayout(new GridLayout(2,1));
 		JLabel title = new JLabel(label);
 		JTextField outText = new JTextField(10);
+		outText.setText(" ");
 		outText.setEditable(false);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), border));
 		panel.add(title);

@@ -1,7 +1,7 @@
 /*
  * Authors: Allan MacDougal and Tyler Zudans
  */
-package tests;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,8 @@ public class ClueGameGUI extends JFrame{
 	private Board board;
 	private JMenu fileMenu;
 	private JMenuBar bar;
+	private GameControlGUI controls;
+	private MyCards hand;
 	
 	public ClueGameGUI() {
 		setup();
@@ -27,6 +29,7 @@ public class ClueGameGUI extends JFrame{
 	private void setup() {
 		//initialize board
 		board = Board.getInstance();
+		controls = new GameControlGUI();
 		board.setConfigFiles("ClueRooms.csv", "ClueRooms.txt", "Names.txt", "Weapons.txt");
 		board.initialize();
 		
@@ -36,12 +39,12 @@ public class ClueGameGUI extends JFrame{
 		fileMenu.add(openDetective());
 		fileMenu.add(exit());
 		bar.add(fileMenu);
-		
+		hand = new MyCards(board.getPlayers().get(0));
 	
 		GUI_Setup();
 	}
 	
-	private JMenuItem openDetective() {//open detectivenotes upon selection from menu
+	private JMenuItem openDetective() {//open detective notes upon selection from menu
 		JMenuItem item = new JMenuItem("Detective Notes");
 		class DetectiveOpener implements ActionListener{
 
@@ -72,9 +75,12 @@ public class ClueGameGUI extends JFrame{
 	private void GUI_Setup() {
 		setTitle("Clue Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 1000);
-		add(this.board);
+		setSize(800, 800);
+		add(this.board, BorderLayout.CENTER);
 		add(bar,BorderLayout.NORTH);
+		add(controls, BorderLayout.SOUTH);
+		add(hand, BorderLayout.EAST);
+		
 
 	}
 	
