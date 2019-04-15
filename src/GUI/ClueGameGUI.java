@@ -7,10 +7,14 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import clueGame.*;
 
@@ -21,6 +25,7 @@ public class ClueGameGUI extends JFrame{
 	private JMenuBar bar;
 	private GameControlGUI controls;
 	private MyCards hand;
+	private JOptionPane popup;
 	
 	public ClueGameGUI() {
 		setup();
@@ -35,6 +40,8 @@ public class ClueGameGUI extends JFrame{
 		
 		//set up menu bar
 		bar = new JMenuBar();
+		popup = new JOptionPane();
+		popup.showMessageDialog(this,"Welcome to Clue!", "ClueGame", JOptionPane.INFORMATION_MESSAGE);
 		fileMenu=new JMenu("File");
 		fileMenu.add(openDetective());
 		fileMenu.add(exit());
@@ -71,6 +78,7 @@ public class ClueGameGUI extends JFrame{
 		item.addActionListener(new DetectiveOpener());
 		return item;
 	}
+	
 
 	private void GUI_Setup() {
 		setTitle("Clue Game");
