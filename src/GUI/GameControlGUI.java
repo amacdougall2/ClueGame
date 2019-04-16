@@ -1,17 +1,23 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clueGame.Board;
+
 public class GameControlGUI extends JPanel{
+	private Board board;
 	public GameControlGUI() {
 		//setSize(new Dimension(1000,400));
+		board = Board.getInstance();
 		setLayout(new GridLayout(2,1));
 		JPanel turn = createTurnPanel();
 		add(turn);
-		JPanel nextPlayer = createButton("Next Player");
+		JPanel nextPlayer = createNextButton("Next Player");
 		add(nextPlayer);
 		JPanel accuse = createButton("Make an Accusation");
 		add(accuse);
@@ -32,7 +38,7 @@ public class GameControlGUI extends JPanel{
 		panel.setLayout(new GridLayout(1,0));
 		JPanel turn = createTurnPanel();
 		panel.add(turn);
-		JPanel nextPlayer = createButton("Next Player");
+		JPanel nextPlayer = createNextButton("Next Player");
 		panel.add(nextPlayer);
 		JPanel accuse = createButton("Make an Accusation");
 		panel.add(accuse);
@@ -82,6 +88,22 @@ public class GameControlGUI extends JPanel{
 		panel.setLayout(new GridLayout(1,1));
 		panel.add(button);
 		return panel;
+	}
+	private JPanel createNextButton(String input) {
+		JButton button = new JButton(input);
+		button.addActionListener(new nextListener());
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,1));
+		panel.add(button);
+		return panel;
+	}
+	class nextListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			board.nextPlayer();
+		}
+		
 	}
 	
 	

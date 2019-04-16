@@ -34,6 +34,7 @@ public class Board extends JPanel{
 	public final int DECK_SIZE = 21; //18 is a temporary value for now
 	public final int NUM_PLAYERS = 6;
 	final int MAX_BOARD_SIZE = 70;
+	int currPlayer = 0;
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -501,5 +502,13 @@ public class Board extends JPanel{
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g.setColor(Color.BLACK);
 		g.drawString(name, col, row);
+	}
+	public void nextPlayer() {
+		currPlayer = (currPlayer+1)%NUM_PLAYERS;
+		System.out.println(this.getPlayers().get(currPlayer)+"Tt");
+	}
+	public int roll() {
+		Random rand = new Random();
+		return rand.nextInt()%5+1;
 	}
 }
