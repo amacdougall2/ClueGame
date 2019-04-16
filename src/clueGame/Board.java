@@ -505,10 +505,32 @@ public class Board extends JPanel{
 	}
 	public void nextPlayer() {
 		currPlayer = (currPlayer+1)%NUM_PLAYERS;
-		System.out.println(this.getPlayers().get(currPlayer)+"Tt");
+		Player current = getPlayers().get(currPlayer);
+		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
+			current.roll();
+			calcTargets(grid[current.getColumn()][current.getRow()],current.roll);
+			BoardCell selectedTarget = new BoardCell(0,0);
+			
+			Random rand = new Random();
+			int index = rand.nextInt(targets.size());
+			int i = 0;
+			debug_print(targets);
+			for(BoardCell b: targets) {
+				if(i==index) selectedTarget = b;
+				i++;
+			}
+			System.out.println(selectedTarget);
+			current.setLocation(selectedTarget);
+		}
 	}
-	public int roll() {
-		Random rand = new Random();
-		return rand.nextInt()%5+1;
+	private void debug_print(Set<BoardCell> targets2) {
+		// TODO Auto-generated method stub
+		for(BoardCell b: targets2) {
+			System.out.print(b);
+			System.out.print(" ");
+		}
+		System.out.println();
+		
 	}
+	
 }

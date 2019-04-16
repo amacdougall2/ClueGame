@@ -113,4 +113,9 @@ public class ComputerPlayer extends Player {
 			System.out.println(c);
 		}
 	}
+	public void move() {
+		// TODO Auto-generated method stub
+		
+		
+	}
 }

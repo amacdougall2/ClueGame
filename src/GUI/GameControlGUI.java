@@ -102,6 +102,7 @@ public class GameControlGUI extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			board.nextPlayer();
+			
 		}
 		
 	}

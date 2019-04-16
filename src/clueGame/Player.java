@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Player {
@@ -18,6 +19,12 @@ public class Player {
 	protected Set<Card> myCards = new HashSet<Card>();
 	protected Set<Card> seenCards = new HashSet<Card>();
 	protected Set<Card> deck = new HashSet<Card>();
+	protected int roll = 0;
+	
+	public void roll() {
+		Random rand = new Random();
+		roll= rand.nextInt()%6+1;
+	}
 	
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
@@ -123,6 +130,13 @@ public class Player {
 		g.fillOval(column*25, row*25, 25, 25);
 		g.setColor(Color.black);
 		g.drawOval(column*25, row*25, 25, 25);
+	}
+
+	public void setLocation(BoardCell selectedTarget) {
+		// TODO Auto-generated method stub
+		row = selectedTarget.getRow();
+		column = selectedTarget.getCol();
+		
 	}
 	
 }
