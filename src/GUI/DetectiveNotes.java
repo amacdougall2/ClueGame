@@ -20,7 +20,7 @@ import clueGame.Player;
 public class DetectiveNotes extends JDialog {
 	Board board;
 	Set<String> players, rooms, weapons;
-	Map<String,Boolean> seen;
+	Map<String,Boolean> seen;//Clicked
 	Set<String> playerGuess,roomGuess,weaponGuess;
 	JPanel pBox,pGuess,rBox,rGuess,wBox,wGuess;
 	
@@ -33,7 +33,7 @@ public class DetectiveNotes extends JDialog {
 		setSize(new Dimension(500,1000));
 		setLayout(new GridLayout(3,2));
 		setTitle("Detective Notes");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		//Set up player checkboxes and dropdown
 		pBox = getOptions(players,"People");
@@ -108,6 +108,9 @@ public class DetectiveNotes extends JDialog {
 		JPanel panel = new JPanel();
 		for(String s: box) {
 			JCheckBox b = new JCheckBox(s);
+			if(seen.containsKey(s)) {
+				b.setSelected(seen.get(s));
+			}
 			b.addActionListener(new boxListener(s));
 			panel.add(b);
 		}
@@ -118,8 +121,8 @@ public class DetectiveNotes extends JDialog {
 	private void boardInit() {// populates sets/comboboxes from board
 		//Set up board
 		board = Board.getInstance();
-		board.setConfigFiles("ClueRooms.csv", "ClueRooms.txt", "Names.txt", "Weapons.txt");
-		board.initialize();
+		//board.setConfigFiles("ClueRooms.csv", "ClueRooms.txt", "Names.txt", "Weapons.txt");
+		//board.initialize();
 		
 		//Create empty guessSets
 		playerGuess= new HashSet<String>();
@@ -140,7 +143,14 @@ public class DetectiveNotes extends JDialog {
 		for(Card c:board.getDeck()) if(c.getType()==CardType.Weapon)weapons.add(c.getCardName());
 		
 		//initialize Map default none seen
-		seen = new HashMap<String,Boolean>();
+		
+		if(board.getSeen()==null) {
+			seen = new HashMap<String,Boolean>();
+		}
+		else {
+			seen = board.getSeen();
+			System.out.println("Seen loaded");
+		}
 		for(String p:players)seen.put(p, false);
 		for(String r:rooms)seen.put(r, false);
 		for(String w:weapons)seen.put(w, false);
@@ -160,6 +170,8 @@ public class DetectiveNotes extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			//change name seen to opposite state
 			seen.replace(name, !(seen.get(name)));
+			//copy seen to board
+			board.setSeen(seen);
 			updateDisplay();
 			
 		}

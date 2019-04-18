@@ -10,6 +10,7 @@ import java.util.Set;
 public class ComputerPlayer extends Player {
 	private Solution mySuggestion = null;
 	
+	
 	public Solution makeAccusation() {
 		return null;
 	}
@@ -28,6 +29,7 @@ public class ComputerPlayer extends Player {
 		}
 	}
 	
+	@Override
 	public Solution createSuggestion() {
 		Set<Card> unseenCards = new HashSet<Card>();
 		Set<Card> unseenPeople = new HashSet<Card>();

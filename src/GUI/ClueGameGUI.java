@@ -6,6 +6,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ public class ClueGameGUI extends JFrame{
 	private GameControlGUI controls;
 	private MyCards hand;
 	private JOptionPane popup;
+	
 	
 	public ClueGameGUI() {
 		setup();

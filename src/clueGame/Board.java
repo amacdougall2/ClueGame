@@ -22,6 +22,7 @@ public class Board extends JPanel implements MouseListener{
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	public Map<Character,String> legend;
 	private Set<BoardCell> visited;
+	Map<String,Boolean> seenCopy;//Clicked boxes for detective notes
 	private Set<BoardCell> targets;
 	private BoardCell[][] grid;
 	private String boardConfigFile;
@@ -466,7 +467,6 @@ public class Board extends JPanel implements MouseListener{
 		return legend.get(c);
 	}
 	public void addPlayer(Player p) {
-		// TODO Auto-generated method stub
 		players.add(p);
 		
 	}
@@ -535,6 +535,7 @@ public class Board extends JPanel implements MouseListener{
 		System.out.println("doit");
 		current = getPlayers().get(currPlayer);
 		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
+			//This portion sets the room and does the computer player's move
 			current.roll();
 			rolled = current.roll;
 			System.out.println("doitnow");
@@ -543,19 +544,30 @@ public class Board extends JPanel implements MouseListener{
 			BoardCell selectedTarget = new BoardCell(0,0);
 			selectedTarget = current.pickLocation(targets, grid[current.getRow()][current.getColumn()]);
 			System.out.println(selectedTarget);
-			current.setLocation(selectedTarget);
+			current.setLocation(selectedTarget, this);
+			
+			int currRow = current.getRow();
+			int currCol = current.getColumn();
+			if (grid[currRow][currCol].isRoom()) {
+				Solution sugg = current.createSuggestion();
+				JOptionPane.showMessageDialog(null, current.getPlayerName() + " Has suggested " + sugg);
+			}
+			
+			
 		}else if(current.getClass()== HumanPlayer.class) {
 			current.roll();
 			rolled = current.roll;
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
 			debug_print(targets);
 			current.showLocations(this);
+			
+			
+			
 		}
 		repaint();
 	}
 	
 	private void debug_print(Set<BoardCell> targets2) {
-		// TODO Auto-generated method stub
 		for(BoardCell b: targets2) {
 			System.out.print(b);
 			System.out.print(" ");
@@ -591,23 +603,26 @@ public class Board extends JPanel implements MouseListener{
 	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
+	}
+	public void setSeen(Map<String, Boolean> seen) {
+		seenCopy = seen;
+		
+	}
+	public Map<String,Boolean> getSeen() {
+		return seenCopy;
 	}
 	
 }

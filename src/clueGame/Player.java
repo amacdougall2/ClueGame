@@ -133,10 +133,12 @@ public abstract class Player {
 		g.drawOval(column*25, row*25, 25, 25);
 	}
 
-	public void setLocation(BoardCell selectedTarget) {
+	public void setLocation(BoardCell selectedTarget, Board board) {
 		// TODO Auto-generated method stub
 		row = selectedTarget.getRow();
 		column = selectedTarget.getCol();
+		char initial = selectedTarget.getInitial();
+		currentRoom = board.legend.get(initial);
 		
 	}
 
