@@ -4,6 +4,7 @@ package clueGame;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 public class HumanPlayer extends Player {
 
@@ -32,6 +33,30 @@ public class HumanPlayer extends Player {
 				System.out.println("FIX-ME: human disprove suggestion prompt required");
 			}
 		}
+		return null;
+	}
+	
+	public void showLocations(Board board) {
+		finished = false;
+		
+		board.highlightSquare(true);
+	}
+	
+	private BoardCell randomSpace(Set<BoardCell> targets) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void finishedTurn(BoardCell clicked) {
+		row = clicked.getRow();
+		column = clicked.getCol();
+		finished = true;
+		}
+	
+	//dummy method
+	@Override
+	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell startCell) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

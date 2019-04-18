@@ -41,7 +41,7 @@ public class ClueGameGUI extends JFrame{
 		//set up menu bar
 		bar = new JMenuBar();
 		popup = new JOptionPane();
-		popup.showMessageDialog(this,"Welcome to Clue!", "ClueGame", JOptionPane.INFORMATION_MESSAGE);
+		popup.showMessageDialog(this,"Welcome to Clue!"+ " You are player " + board.getPlayers().get(0).getPlayerName(), "ClueGame", JOptionPane.INFORMATION_MESSAGE);
 		fileMenu=new JMenu("File");
 		fileMenu.add(openDetective());
 		fileMenu.add(exit());

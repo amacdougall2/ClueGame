@@ -54,6 +54,7 @@ public class ComputerPlayer extends Player {
 		return mySuggestion;
 	}
 	
+	@Override
 	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell startCell) {
 		if (startCell.isRoom()) {
 			return randomSpace(targets);
@@ -116,6 +117,16 @@ public class ComputerPlayer extends Player {
 	public void move() {
 		// TODO Auto-generated method stub
 		
+		
+	}
+	@Override
+	public void showLocations(Board board) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void finishedTurn(BoardCell clicked) {
+		// TODO Auto-generated method stub
 		
 	}
 }

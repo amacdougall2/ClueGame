@@ -11,6 +11,8 @@ import clueGame.Board;
 
 public class GameControlGUI extends JPanel{
 	private Board board;
+	
+	
 	public GameControlGUI() {
 		//setSize(new Dimension(1000,400));
 		board = Board.getInstance();

@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Player {
+public abstract class Player {
 	
-
+	public boolean finished = true;
 	protected String playerName;
 	protected String currentRoom = "Walkway"; //Defaults to walkway, as all players spawn at walkways
 	protected int row;
@@ -19,11 +19,11 @@ public class Player {
 	protected Set<Card> myCards = new HashSet<Card>();
 	protected Set<Card> seenCards = new HashSet<Card>();
 	protected Set<Card> deck = new HashSet<Card>();
-	protected int roll = 0;
+	public int roll = 0;
 	
 	public void roll() {
 		Random rand = new Random();
-		roll= rand.nextInt()%6+1;
+		roll= rand.nextInt(6)+1;
 	}
 	
 	public Card disproveSuggestion(Solution suggestion) {
@@ -124,6 +124,7 @@ public class Player {
 	/*
 	 * GUI Code Below
 	 */
+	public abstract BoardCell pickLocation(Set<BoardCell> targets, BoardCell startCell);
 	
 	public void draw(Graphics g) {
 		g.setColor(color);
@@ -138,5 +139,9 @@ public class Player {
 		column = selectedTarget.getCol();
 		
 	}
+
+	public abstract void showLocations(Board board);
+
+	public abstract void finishedTurn(BoardCell clicked);
 	
 }

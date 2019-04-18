@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,7 +18,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class Board extends JPanel{
+public class Board extends JPanel implements MouseListener{
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	public Map<Character,String> legend;
 	private Set<BoardCell> visited;
@@ -26,15 +28,17 @@ public class Board extends JPanel{
 	private String roomConfigFile;
 	private String playerConfigFile;
 	private String weaponConfigFile;
+	private Player current;
 	private int numRows;
 	private int numCols;
 	public Solution theAnswer;
 	public ArrayList<Player> players;
 	public Set<Card> deck;
+	public int rolled = 0;
 	public final int DECK_SIZE = 21; //18 is a temporary value for now
 	public final int NUM_PLAYERS = 6;
 	final int MAX_BOARD_SIZE = 70;
-	int currPlayer = 0;
+	int currPlayer = -1;
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -57,6 +61,8 @@ public class Board extends JPanel{
 		setPlayerDecks();
 		calcAdjacencies();
 		dealCards();
+		addMouseListener(this);
+		current = getPlayers().get(5);
 		this.setPreferredSize(new Dimension(25*numCols,25*numRows));
 	}
 	
@@ -89,10 +95,17 @@ public class Board extends JPanel{
 		String line;
 		BufferedReader scan = new BufferedReader(playerFile);
 		try {
+			int counter = 0;
 			while ((line = scan.readLine()) != null) {//Loads in the Values for each player
 				String[] inputValues = line.split(",");
-				players.add(new ComputerPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
-				deck.add(new Card(inputValues[0], CardType.Person));
+				if(counter == 0) {
+					players.add(new HumanPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
+					deck.add(new Card(inputValues[0], CardType.Person));
+					counter++;
+				}else {
+					players.add(new ComputerPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
+					deck.add(new Card(inputValues[0], CardType.Person));
+				}
 			}
 			playerFile.close();
 		} catch (IOException e) {
@@ -498,31 +511,49 @@ public class Board extends JPanel{
 		drawName(g, "PCJ's House", 450, 75);
 	}
 	
+	public void highlightSquare(boolean input) {
+		if (targets != null) {
+			for (BoardCell cell : targets) {
+				cell.setLight(input);
+			}
+		}
+	}
+	
 	private void drawName(Graphics g, String name,  int col, int row) {
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g.setColor(Color.BLACK);
 		g.drawString(name, col, row);
 	}
+	
 	public void nextPlayer() {
+		if(current.finished == false) {
+			JOptionPane.showMessageDialog(null, "redo ur turn, you aint dont yet!");
+			return;
+		}
+		highlightSquare(false);
 		currPlayer = (currPlayer+1)%NUM_PLAYERS;
-		Player current = getPlayers().get(currPlayer);
+		System.out.println("doit");
+		current = getPlayers().get(currPlayer);
 		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
 			current.roll();
-			calcTargets(grid[current.getColumn()][current.getRow()],current.roll);
-			BoardCell selectedTarget = new BoardCell(0,0);
-			
-			Random rand = new Random();
-			int index = rand.nextInt(targets.size());
-			int i = 0;
+			rolled = current.roll;
+			System.out.println("doitnow");
+			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
 			debug_print(targets);
-			for(BoardCell b: targets) {
-				if(i==index) selectedTarget = b;
-				i++;
-			}
+			BoardCell selectedTarget = new BoardCell(0,0);
+			selectedTarget = current.pickLocation(targets, grid[current.getRow()][current.getColumn()]);
 			System.out.println(selectedTarget);
 			current.setLocation(selectedTarget);
+		}else if(current.getClass()== HumanPlayer.class) {
+			current.roll();
+			rolled = current.roll;
+			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
+			debug_print(targets);
+			current.showLocations(this);
 		}
+		repaint();
 	}
+	
 	private void debug_print(Set<BoardCell> targets2) {
 		// TODO Auto-generated method stub
 		for(BoardCell b: targets2) {
@@ -530,6 +561,52 @@ public class Board extends JPanel{
 			System.out.print(" ");
 		}
 		System.out.println();
+		
+	}
+	
+	private BoardCell getClicked(int clickX, int clickY) {
+		int row = clickY/25;
+		int col = clickX/25;
+		
+		BoardCell clicked = grid[row][col];
+		if (targets.contains(clicked)){
+			return clicked;
+		}else {
+			return null;
+		}
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent event) {
+		BoardCell clicked = getClicked(event.getX(),event.getY());
+		
+		if(clicked == null) {
+			JOptionPane.showMessageDialog(null, "NOT VALID BITCH");
+		}else {
+			current.finishedTurn(clicked);
+			
+			repaint();
+		}
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	

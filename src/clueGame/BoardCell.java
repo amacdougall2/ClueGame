@@ -14,6 +14,7 @@ public class BoardCell {
 	private int row;
 	private int col;
 	private char initial;
+	private boolean light;
 	//default doorInitial to space because characters cant compare to null
 	private DoorDirection doorInitial = DoorDirection.NONE;
 	public BoardCell(int row, int col) {
@@ -64,6 +65,10 @@ public class BoardCell {
 		return doorInitial;
 	}
 	
+	public boolean isLight() {
+		return light;
+	}
+	
 	//Returns the int value of the row
 	public int getRow() {
 		return row;
@@ -86,7 +91,12 @@ public class BoardCell {
 	 */
 	
 	public void draw(Graphics g) {
-		if (isWalkway()) {
+		if (isLight()) {
+			g.setColor(Color.CYAN);
+			g.fillRect(col*25, row*25, 25, 25);
+			g.setColor(Color.BLACK);
+			g.drawRect(col*25, row*25, 25, 25);
+		}else if(isWalkway()) {
 			g.setColor(Color.YELLOW);
 			g.fillRect(col*25, row*25, 25, 25);
 			g.setColor(Color.BLACK);
@@ -115,6 +125,10 @@ public class BoardCell {
 			}
 		}
 		
+	}
+	
+	public void setLight(boolean state) {
+		light = state;
 	}
 	
 }
