@@ -1,3 +1,27 @@
+commit 1ddba78fad9e7df03f15623687455c54b01671af
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 17 22:10:02 2019 -0600
+
+    Finished all of the moving of the players and stuff
+
+commit 3d1f0728502596a1af87d6e658784425147920d0
+Author: TylerBuildTools <tzunconfigured@null.spigotmc.org>
+Date:   Tue Apr 16 16:57:06 2019 -0600
+
+    Computer Movement Semi-Functional - Crashes on 3rd Computer Player - issue is that target list is always empty
+
+commit 565782c9a86b1aa86afaf5cf08ce8441bb6f5db1
+Author: TylerBuildTools <tzunconfigured@null.spigotmc.org>
+Date:   Tue Apr 16 15:54:30 2019 -0600
+
+    Added a nextPlayer function in board activated by the nextPlayer button in ClueGameGUI
+
+commit 94f02d2418368bf4590020e69a0030fdb7a1599a
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Mon Apr 15 10:50:21 2019 -0600
+
+    Added gitlog
+
 commit b3a996c2276a5bfc60c50668fa8793577881d230
 Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
 Date:   Mon Apr 15 10:49:04 2019 -0600
