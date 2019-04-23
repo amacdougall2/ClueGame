@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.Map.Entry;
 
 import javax.swing.*;
 
@@ -62,10 +63,12 @@ public class Board extends JPanel implements MouseListener{
 		setPlayerDecks();
 		calcAdjacencies();
 		dealCards();
+		buildAnswer();
 		addMouseListener(this);
 		current = getPlayers().get(5);
 		this.setPreferredSize(new Dimension(25*numCols,25*numRows));
 	}
+	
 	
 	public void loadConfigFiles() { //Used for testing configuration loading
 		try {
@@ -623,6 +626,52 @@ public class Board extends JPanel implements MouseListener{
 	}
 	public Map<String,Boolean> getSeen() {
 		return seenCopy;
+	}
+	public Player getCurrentPlayer() {
+		return current;
+	}
+	public Set<String> getWeapons(){
+		Set<String> set = new HashSet();
+		for(Card c:deck) {
+			if(c.getType()==CardType.Weapon) set.add(c.getCardName());
+		}
+		return set;
+	}
+	public void handleAccusation(Solution solution) {
+		// TODO Auto-generated method stub
+		endGame(solution.equals(theAnswer));
+		
+	}
+	private void endGame(boolean b) {
+		// TODO Auto-generated method stub
+		if(b) {
+			JOptionPane.showMessageDialog(null, "Victory is you!");
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You Win..... NOT!");
+		}
+		
+		
+	}
+	private void buildAnswer() {
+		// TODO Auto-generated method stub
+		Random rand = new Random();
+		String person = getPlayers().get(rand.nextInt(NUM_PLAYERS)).getPlayerName();
+		ArrayList<String> weap = new ArrayList<String>();
+		for(String s: getWeapons())weap.add(s);
+		String weapon = weap.get(rand.nextInt(weap.size()));
+		String room = getRooms().get(rand.nextInt(getRooms().size()));
+		
+		theAnswer = new Solution(person,room,weapon);
+		
+	}
+	public ArrayList<String> getRooms() {
+		// TODO Auto-generated method stub
+		ArrayList<String> roomList = new ArrayList<String>();
+		for(Entry<Character, String> s:legend.entrySet()) {
+			roomList.add(s.getValue());
+		}
+		return roomList;
 	}
 	
 }

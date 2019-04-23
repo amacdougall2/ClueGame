@@ -21,7 +21,7 @@ public class GameControlGUI extends JPanel{
 		add(turn);
 		JPanel nextPlayer = createNextButton("Next Player");
 		add(nextPlayer);
-		JPanel accuse = createButton("Make an Accusation");
+		JPanel accuse = createMakeButton("Make an Accusation");
 		add(accuse);
 		JPanel die = createBorderedPanel("Die","Roll:");
 		add(die);
@@ -35,6 +35,15 @@ public class GameControlGUI extends JPanel{
 		add(botPanel);*/
 	}
 	
+	private JPanel createMakeButton(String string) {
+		JButton button = new JButton(string);
+		button.addActionListener(new accuseListener());
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,1));
+		panel.add(button);
+		return panel;
+	}
+
 	private JPanel createTopPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,0));
@@ -104,6 +113,16 @@ public class GameControlGUI extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			board.nextPlayer();
+			
+		}
+		
+	}
+	class accuseListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Guesser guess = new Guesser();
+			guess.setVisible(true);
 			
 		}
 		

@@ -46,6 +46,7 @@ public class ClueGameGUI extends JFrame{
 		popup.showMessageDialog(this,"Welcome to Clue!"+ " You are player " + board.getPlayers().get(0).getPlayerName(), "ClueGame", JOptionPane.INFORMATION_MESSAGE);
 		fileMenu=new JMenu("File");
 		fileMenu.add(openDetective());
+		fileMenu.add(openGuesser());
 		fileMenu.add(exit());
 		bar.add(fileMenu);
 		hand = new MyCards(board.getPlayers().get(0));
@@ -61,6 +62,20 @@ public class ClueGameGUI extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DetectiveNotes dNotes = new DetectiveNotes();
 				dNotes.setVisible(true);
+			}
+			
+		}
+		item.addActionListener(new DetectiveOpener());
+		return item;
+	}
+	private JMenuItem openGuesser() {//open detective notes upon selection from menu
+		JMenuItem item = new JMenuItem("Accuse");
+		class DetectiveOpener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Guesser guess = new Guesser();
+				guess.setVisible(true);
 			}
 			
 		}
