@@ -11,9 +11,9 @@ public class ComputerPlayer extends Player {
 	private Solution mySuggestion = null;
 	public boolean canAccuse;
 	
-	
+	@Override
 	public Solution makeAccusation() {
-		return null;
+		return mySuggestion;
 	}
 	@Override
 	public Card disproveSuggestion(Solution suggestion) {
@@ -132,6 +132,11 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void finishedTurn(BoardCell clicked) {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void setAccuse(boolean b) {
+		canAccuse = b;
 		
 	}
 }

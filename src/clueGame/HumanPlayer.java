@@ -61,4 +61,9 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	protected void setAccuse(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

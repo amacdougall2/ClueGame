@@ -11,6 +11,7 @@ import java.util.Set;
 public abstract class Player {
 	
 	public boolean finished = true;
+	public boolean canAccuse = false;
 	protected String playerName;
 	protected String currentRoom = "Walkway"; //Defaults to walkway, as all players spawn at walkways
 	protected int row;
@@ -118,8 +119,8 @@ public abstract class Player {
 		return null;
 	}
 	
-	public void makeAccusation(Solution s) {
-		
+	public Solution makeAccusation() {
+		return null;
 	}
 	
 	/*
@@ -154,5 +155,7 @@ public abstract class Player {
 		currentRoom = board.legend.get(room);
 		
 	}
+
+	protected abstract void setAccuse(boolean b);
 	
 }

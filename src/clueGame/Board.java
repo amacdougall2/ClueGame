@@ -66,10 +66,11 @@ public class Board extends JPanel implements MouseListener{
 		setPlayerDecks();
 		calcAdjacencies();
 		dealCards();
-		buildAnswer();
+		//buildAnswer();
 		addMouseListener(this);
 		current = getPlayers().get(5);
 		this.setPreferredSize(new Dimension(25*numCols,25*numRows));
+		System.out.println(theAnswer);
 	}
 	
 	
@@ -353,13 +354,53 @@ public class Board extends JPanel implements MouseListener{
 	}
 	
 	public void dealCards() {
-		int counter = 0; //Counter that keeps track of current player
+		int playerCounter = 0; //Counter that keeps track of current player
+		
+		Random rand = new Random(); //Variables used to select the answer
+		int randomWeapon = rand.nextInt(6);
+		int randomPerson = rand.nextInt(6);
+		int randomRoom = rand.nextInt(9);
+		int weaponCounter = 0;
+		int personCounter = 0;
+		int roomCounter = 0;
+		
 		for (Card c : deck) {
-			players.get(counter).addCard(c);
-			if (counter < NUM_PLAYERS-1) {
-				counter++;
-			}else {
-				counter = 0;
+			if(c.getType() == CardType.Person) {
+				if(personCounter == randomPerson) {
+					theAnswer.person = c.getCardName();
+				}else {
+					players.get(playerCounter).addCard(c);
+					if (playerCounter < NUM_PLAYERS-1) {
+						playerCounter++;
+					}else {
+						playerCounter = 0;
+					}
+				}
+				personCounter++;
+			}else if (c.getType() == CardType.Weapon) {
+				if(weaponCounter == randomWeapon) {
+					theAnswer.weapon = c.getCardName();
+				}else {
+					players.get(playerCounter).addCard(c);
+					if (playerCounter < NUM_PLAYERS-1) {
+						playerCounter++;
+					}else {
+						playerCounter = 0;
+					}
+				}
+				weaponCounter++;
+			}else if (c.getType() == CardType.Room) {
+				if(roomCounter == randomRoom) {
+					theAnswer.room = c.getCardName();
+				}else {
+					players.get(playerCounter).addCard(c);
+					if (playerCounter < NUM_PLAYERS-1) {
+						playerCounter++;
+					}else {
+						playerCounter = 0;
+					}
+				}
+				roomCounter++;
 			}
 		}
 	}
@@ -551,6 +592,14 @@ public class Board extends JPanel implements MouseListener{
 		current = getPlayers().get(currPlayer);//move to next player
 		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
 			//This portion sets the room and does the computer player's move
+			if(current.canAccuse == true) {
+				Solution sugg = current.makeAccusation();
+				if(checkAccusation(sugg)) {
+					JOptionPane.showMessageDialog(null, "Accusation was True");
+				}else {
+					JOptionPane.showMessageDialog(null, "The Accusation was False");
+				}
+			}
 			current.roll();
 			rolled = current.roll;
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
@@ -569,6 +618,7 @@ public class Board extends JPanel implements MouseListener{
 					JOptionPane.showMessageDialog(null, "The suggestion was disproven");
 				}else {
 					JOptionPane.showMessageDialog(null, "The suggestion was not disproven");
+					current.setAccuse(true);
 				}
 			}
 			
