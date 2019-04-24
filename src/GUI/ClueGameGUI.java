@@ -74,7 +74,7 @@ public class ClueGameGUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Guesser guess = new Guesser();
+				Accuser guess = new Accuser();
 				guess.setVisible(true);
 			}
 			

@@ -10,10 +10,12 @@ public class HumanPlayer extends Player {
 
 	public HumanPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
+		super.isHuman=true;
 		// TODO Auto-generated constructor stub
 	}
 	public HumanPlayer(String playerName, int row, int column, String color) {
 		super(playerName, row, column, color);
+		super.isHuman=true;
 		// TODO Auto-generated constructor stub
 	}
 	@Override

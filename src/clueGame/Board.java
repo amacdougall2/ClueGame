@@ -14,10 +14,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.Map.Entry;
 
 import javax.swing.*;
+
+import GUI.Guesser;
 
 public class Board extends JPanel implements MouseListener{
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
@@ -529,24 +532,30 @@ public class Board extends JPanel implements MouseListener{
 	}
 	
 	public void nextPlayer() {
+		current.updateLocation();
 		if(current.finished == false) {
 			JOptionPane.showMessageDialog(null, "redo ur turn, you aint dont yet!");
 			return;
 		}
 		highlightSquare(false);
 		currPlayer = (currPlayer+1)%NUM_PLAYERS;
-		System.out.println("doit");
-		current = getPlayers().get(currPlayer);
+		if(current.isHuman) {//before switching if the player is human
+			if(!current.getCurrentRoom().equals("Walkway")) {// and is in a room
+				Guesser guess = new Guesser();
+				guess.setVisible(true);
+			}
+			
+		}
+		current = getPlayers().get(currPlayer);//move to next player
 		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
 			//This portion sets the room and does the computer player's move
 			current.roll();
 			rolled = current.roll;
-			System.out.println("doitnow");
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
-			debug_print(targets);
+			//debug_print(targets);
 			BoardCell selectedTarget = new BoardCell(0,0);
 			selectedTarget = current.pickLocation(targets, grid[current.getRow()][current.getColumn()]);
-			System.out.println(selectedTarget);
+			//System.out.println(selectedTarget);
 			current.setLocation(selectedTarget, this);
 			
 			int currRow = current.getRow();
@@ -561,7 +570,7 @@ public class Board extends JPanel implements MouseListener{
 			current.roll();
 			rolled = current.roll;
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
-			debug_print(targets);
+			//debug_print(targets);
 			current.showLocations(this);
 			
 			
@@ -596,7 +605,7 @@ public class Board extends JPanel implements MouseListener{
 		BoardCell clicked = getClicked(event.getX(),event.getY());
 		
 		if(clicked == null) {
-			JOptionPane.showMessageDialog(null, "NOT VALID BITCH");
+			JOptionPane.showMessageDialog(null, "NOT VALID");
 		}else {
 			current.finishedTurn(clicked);
 			
@@ -672,6 +681,10 @@ public class Board extends JPanel implements MouseListener{
 			roomList.add(s.getValue());
 		}
 		return roomList;
+	}
+	public BoardCell[][] getGrid() {
+		// TODO Auto-generated method stub
+		return grid;
 	}
 	
 }

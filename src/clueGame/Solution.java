@@ -13,8 +13,8 @@ public class Solution {
 		this.weapon = weapon;
 	}
 	public boolean equals(Solution other) {
-		System.out.println(this);
-		System.out.println(other);
+		//System.out.println(this);
+		//System.out.println(other);
 		return(this.person.equals(other.person) && this.room.equals(other.room) && this.weapon.equals(other.weapon));
 	}
 	@Override

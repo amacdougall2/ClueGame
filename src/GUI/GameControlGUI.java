@@ -121,8 +121,13 @@ public class GameControlGUI extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Guesser guess = new Guesser();
-			guess.setVisible(true);
+			if (board.getCurrentPlayer().isHuman) {
+				Accuser guess = new Accuser();
+				guess.setVisible(true);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "You cannot accuse until it is your turn!");
+			}
 			
 		}
 		

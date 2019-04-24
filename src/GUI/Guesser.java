@@ -15,30 +15,27 @@ import clueGame.Solution;
 
 public class Guesser extends JDialog {
 	Board board;
-	JComboBox<String> two,four,six;
 	public Guesser() {
 		board = Board.getInstance();
 		setSize(new Dimension(250,500));
 		setLayout(new GridLayout(4,2));
-		setTitle("Make a Guess");
+		setTitle("Make a Suggestion");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JLabel one = new JLabel("Your Room");
 		add(one);
-		//JLabel two = new JLabel(board.getCurrentPlayer().getCurrentRoom());
-		//add(two);
-		two = getGuess3(board.getRooms());
+		JLabel two = new JLabel(board.getCurrentPlayer().getCurrentRoom());
 		add(two);
 		JLabel three = new JLabel("Person");
 		add(three);
-		four = getGuess(board.getPlayers());
+		JComboBox<String> four = getGuess(board.getPlayers());
 		add(four);
 		JLabel five = new JLabel("Weapon");
 		add(five);
-		six = getGuess2(board.getWeapons());
+		JComboBox<String> six = getGuess2(board.getWeapons());
 		add(six);
 		JButton submit = new JButton("Submit");
-		submit.addActionListener(new SubmitListener(two.getSelectedItem(),four.getSelectedItem(),six.getSelectedItem()));
+		submit.addActionListener(new SubmitListener(two.getText(),four.getName(),six.getName()));
 		add(submit);
 		JButton dispose = new JButton("Cancel");
 		dispose.addActionListener(new close());
@@ -62,30 +59,19 @@ public class Guesser extends JDialog {
 		}
 		return suggest;
 	}
-	private JComboBox<String> getGuess3(ArrayList<String> arrayList) {
-		// TODO Auto-generated method stub
-		JComboBox<String> suggest = new JComboBox<String>();
-		for(String s:arrayList) {
-			suggest.addItem(s);
-		}
-		return suggest;
-	}
 	public class SubmitListener implements ActionListener {
 		String room,person,weapon;
 		Board board;
-		public SubmitListener( Object person,Object room, Object weapon) {
-			this.room = room.toString();
-			this.person=person.toString();
-			this.weapon=weapon.toString();
+		public SubmitListener(String room, String person, String weapon) {
+			this.room = room;
+			this.person=person;
+			this.weapon=weapon;
 			board=Board.getInstance();
 		}
-		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			room = four.getSelectedItem().toString();
-			person= two.getSelectedItem().toString();
-			weapon= six.getSelectedItem().toString();
-			board.handleAccusation(new Solution(room,person,weapon));
+			board.handleSuggestion(new Solution(person,room,weapon), board.getCurrentPlayer());
+			dispose();
 			// TODO Auto-generated method stub
 
 		}

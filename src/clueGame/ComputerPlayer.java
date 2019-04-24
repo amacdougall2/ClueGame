@@ -103,11 +103,13 @@ public class ComputerPlayer extends Player {
 	
 	public ComputerPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
+		isHuman=false;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public ComputerPlayer(String playerName, int row, int column, String color) {
 		super(playerName, row, column, color);
+		isHuman=false;
 		// TODO Auto-generated constructor stub
 	}
 	

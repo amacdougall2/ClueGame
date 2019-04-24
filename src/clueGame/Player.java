@@ -19,6 +19,7 @@ public abstract class Player {
 	protected Set<Card> myCards = new HashSet<Card>();
 	protected Set<Card> seenCards = new HashSet<Card>();
 	protected Set<Card> deck = new HashSet<Card>();
+	public boolean isHuman;
 	public int roll = 0;
 	
 	public void roll() {
@@ -145,5 +146,13 @@ public abstract class Player {
 	public abstract void showLocations(Board board);
 
 	public abstract void finishedTurn(BoardCell clicked);
+
+	public void updateLocation() {
+		// TODO Auto-generated method stub
+		Board board = Board.getInstance();
+		char room = board.getGrid()[row][column].getInitial();
+		currentRoom = board.legend.get(room);
+		
+	}
 	
 }
