@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	private Solution mySuggestion = null;
+	public boolean canAccuse;
 	
 	
 	public Solution makeAccusation() {

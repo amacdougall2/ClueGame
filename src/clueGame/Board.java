@@ -36,7 +36,7 @@ public class Board extends JPanel implements MouseListener{
 	private Player current;
 	private int numRows;
 	private int numCols;
-	public Solution theAnswer;
+	public Solution theAnswer = new Solution("", "", "");
 	public ArrayList<Player> players;
 	public Set<Card> deck;
 	public int rolled = 0;
@@ -107,7 +107,9 @@ public class Board extends JPanel implements MouseListener{
 				String[] inputValues = line.split(",");
 				if(counter == 0) {
 					players.add(new HumanPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
+					
 					deck.add(new Card(inputValues[0], CardType.Person));
+					
 					counter++;
 				}else {
 					players.add(new ComputerPlayer(inputValues[0],Integer.parseInt(inputValues[1].substring(1)), Integer.parseInt(inputValues[2].substring(1)), inputValues[3].substring(1)));
@@ -563,6 +565,11 @@ public class Board extends JPanel implements MouseListener{
 			if (grid[currRow][currCol].isRoom()) {
 				Solution sugg = current.createSuggestion();
 				JOptionPane.showMessageDialog(null, current.getPlayerName() + " Has suggested " + sugg);
+				if(handleSuggestion(sugg,current) != null) {
+					JOptionPane.showMessageDialog(null, "The suggestion was disproven");
+				}else {
+					JOptionPane.showMessageDialog(null, "The suggestion was not disproven");
+				}
 			}
 			
 			
