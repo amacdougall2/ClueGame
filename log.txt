@@ -1,3 +1,57 @@
+commit 6d027364489829873676f296495cf336f08b127a
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 24 18:26:11 2019 -0600
+
+    Made it also display player roll
+
+commit a158983bd051831921ebbac2ec5934eb629d3210
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 24 18:25:42 2019 -0600
+
+    Fixed the GUI to output suggestions and die rolls and current player
+
+commit 8404501add37b893525046e46e9f470a31988567
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 24 17:44:37 2019 -0600
+
+    Finished all computer player functionalities and redid the dealCards so that we actually have a set of cards not in circulation
+
+commit 01a1c406f77d556fd719517259f280e209252068
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 24 17:20:50 2019 -0600
+
+    Made computer suggestions work
+
+commit ad7ab374331070f4cfddb3bc992143aaba3d8e31
+Author: TylerBuildTools <tzunconfigured@null.spigotmc.org>
+Date:   Wed Apr 24 08:02:16 2019 -0600
+
+    added accuser and suggester. accusation can be used whenever it is the players turn, and suggestion happens once human player onfirms movement into a room
+
+commit a3d0a193cc940ec0f81312310407844e00a0903d
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Tue Apr 23 22:06:43 2019 -0600
+
+    Added forgotten things cuz github is a pain
+
+commit ac7e9218aa43f7d353516a8ebf1b979e87a3dd65
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Tue Apr 23 15:30:15 2019 -0600
+
+    Peer Programmed: Made Suggestion and Accusation boxes, updated accusation handling in Board, made victory screens
+
+commit 79e8c6d409af9e4f2fd38505d69d92c82499188c
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Thu Apr 18 15:25:18 2019 -0600
+
+    Added the suggestions for computers
+
+commit 0adfdef60931b47d862d1ed3aca302786d420778
+Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
+Date:   Wed Apr 17 22:10:40 2019 -0600
+
+    Added a log.txt
+
 commit 1ddba78fad9e7df03f15623687455c54b01671af
 Author: amacdougall2 <38050064+amacdougall2@users.noreply.github.com>
 Date:   Wed Apr 17 22:10:02 2019 -0600
