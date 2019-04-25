@@ -100,7 +100,7 @@ public class ClueGameGUI extends JFrame{
 	private void GUI_Setup() {
 		setTitle("Clue Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 800);
+		setSize(1100, 800);
 		add(this.board, BorderLayout.CENTER);
 		add(bar,BorderLayout.NORTH);
 		add(controls, BorderLayout.SOUTH);

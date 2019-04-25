@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 
 import javax.swing.*;
 
+import GUI.GameControlGUI;
 import GUI.Guesser;
 
 public class Board extends JPanel implements MouseListener{
@@ -590,8 +591,9 @@ public class Board extends JPanel implements MouseListener{
 			
 		}
 		current = getPlayers().get(currPlayer);//move to next player
+		GameControlGUI.player.setText(current.getPlayerName());
 		if(current.getClass()== ComputerPlayer.class) {//move randomly for computer
-			//This portion sets the room and does the computer player's move
+			//If the computer player can accuse, make an accusation.
 			if(current.canAccuse == true) {
 				Solution sugg = current.makeAccusation();
 				if(checkAccusation(sugg)) {
@@ -601,6 +603,7 @@ public class Board extends JPanel implements MouseListener{
 				}
 			}
 			current.roll();
+			GameControlGUI.die.setText(((Integer)current.roll).toString());
 			rolled = current.roll;
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
 			//debug_print(targets);
@@ -609,16 +612,20 @@ public class Board extends JPanel implements MouseListener{
 			//System.out.println(selectedTarget);
 			current.setLocation(selectedTarget, this);
 			
+			//If the Computer is in a room, create and handle a suggestion
 			int currRow = current.getRow();
 			int currCol = current.getColumn();
 			if (grid[currRow][currCol].isRoom()) {
 				Solution sugg = current.createSuggestion();
+				GameControlGUI.guess.setText(sugg.toString());
 				JOptionPane.showMessageDialog(null, current.getPlayerName() + " Has suggested " + sugg);
 				if(handleSuggestion(sugg,current) != null) {
 					JOptionPane.showMessageDialog(null, "The suggestion was disproven");
+					GameControlGUI.result.setText("Disproven");
 				}else {
 					JOptionPane.showMessageDialog(null, "The suggestion was not disproven");
 					current.setAccuse(true);
+					GameControlGUI.result.setText("Not Disproven");
 				}
 			}
 			
@@ -629,8 +636,6 @@ public class Board extends JPanel implements MouseListener{
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
 			//debug_print(targets);
 			current.showLocations(this);
-			
-			
 			
 		}
 		repaint();
