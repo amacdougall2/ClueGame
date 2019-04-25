@@ -633,6 +633,7 @@ public class Board extends JPanel implements MouseListener{
 		}else if(current.getClass()== HumanPlayer.class) {
 			current.roll();
 			rolled = current.roll;
+			GameControlGUI.die.setText(((Integer)current.roll).toString());
 			calcTargets(grid[current.getRow()][current.getColumn()],current.roll);
 			//debug_print(targets);
 			current.showLocations(this);
